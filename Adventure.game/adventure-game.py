@@ -487,7 +487,7 @@ def action():
             for i in ["z","Z","z","z","Z"]:
                 print(i)
                 sleep(random()/2)
-            tprint("You wake up feeling very refreshed!\nYou gain 0HP!")
+            tprint("You wake up feeling very refreshed!\nYou gain 0 HP!")
         case "5":
             fnd=res(tle)
             for i in fnd:
