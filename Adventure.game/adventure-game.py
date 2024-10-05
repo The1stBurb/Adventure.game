@@ -445,7 +445,7 @@ def hpr():
         fel="incredibly amazingly over-healthier"
     return fel
 def action():
-    print(p[6])
+    # print(p[6])
     if randint(0,5)==0:
         fight()
     tle=mp[p[0]][p[1]][0]
