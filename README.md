@@ -3,7 +3,7 @@ asd
 basically a game i making
 
 to do
-* make fightin sys better
+* ~~make fightin sys better~~ mostly
 * make it so you can get tools
 * make it so you can get weapons
 * make enemies drop stuff. Fight sys should be done here

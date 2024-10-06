@@ -310,11 +310,18 @@ def fight():
                     bd.hp-=dm
                     # print("ouch")
                 case "2":
-                    print("swish")
+                    print("You weren't able to dodge!")
                 case "3":
-                    print("spede")
+                    # print("spede")
+                    if randint(0,4)==0:
+                        print("You got away!")
+                        fg=False
+                        continue
+                    else:
+                        print("You weren't able to run!")
                 case _:
                     continue
+            sleep(0.5)
         else:
             print("It's",bd.nm+"'s turn!")
             print(bd)
@@ -338,7 +345,7 @@ def fight():
         print("You gain",atp,"ATK!")
         p[4]+=hpp
         p[5]+=atp
-        intput("Press enter to continue!")
+    intput("Press enter to continue!")
     print("\033c")
 def res(tl):
     rs=[["nothing!"],["grass","hemp","seed"],["wood","leaf","apple"],["water","rock","fish"],["rock","coal","iron","wood"]][tl]#,"rock","rock","rock"
