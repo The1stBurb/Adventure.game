@@ -2,6 +2,14 @@
 asd  
 basically a game i making
 
+to do
+* make fightin sys better
+* make it so you can get tools
+* make it so you can get weapons
+* make enemies drop stuff. Fight sys should be done here
+* make build sys work
+* LOTS more this is still really a WIP.py project
+
 has:
 * time sys -- temp sys based on this
 * map sys
