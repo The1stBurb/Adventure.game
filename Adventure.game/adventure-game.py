@@ -125,7 +125,11 @@ mater={
     "rock":["build","throw"],
     "fish":["eat","throw"],
     "coal":["throw","burn"],
-    "iron":["throw","build"],}
+    "iron":["throw","build"],
+    "pickaxe":["equip"],
+    "axe":["equip"],
+    "sword":["equip"],
+    "swrod":["equip"],}
 craft={
     "fire":[[["wood","coal"],5],1],
     "house":[["wood",50],2],
