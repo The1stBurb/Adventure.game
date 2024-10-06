@@ -2,12 +2,7 @@ from random import choice,randint,random
 import sys
 from time import sleep,perf_counter
 from math import floor,ceil
-#from adventureSupp import craft
-class bg:
-    def __init__(self,name,hp,atk):
-        self.nm,self.hp,self.atk=name,hp,atk
-    def __str__(self):
-        return f"{self.nm}:\n  HP: {self.hp}\n  Atk: {self.atk}\n"
+from adventureSupp import bads,bg
 def sm(n):
     n=int(n)
     ks={"1":"st","2":"nd","3":"rd"}
@@ -296,8 +291,9 @@ def hgr():
         quit()
     return txt
 def fight():
-    global p,bg
-    bd=bg("Bad guy",randint(5,10),randint(5,10))
+    global p,bads
+    bd=choice(bads)
+    bd=bg(bd.nm,bd.hp,bd.atk)
     print(bd)
     t=1
     fg=True
