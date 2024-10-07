@@ -311,8 +311,9 @@ def hgr():
 def fight():
     global p,bads
     bd=choice(bads)
-    bd=bg(bd.nm,bd.hp,bd.atk)
+    bd=bg(bd.nm,bd.hp,bd.atk,bd.wpn)
     print(bd)
+    print(bd.sw())
     t=1
     fg=True
     while fg:
@@ -322,7 +323,7 @@ def fight():
             dor=intput("What would you like to do?\n 1. Attack\n 2. Dodge\n 3. Run")
             match dor:
                 case "1":
-                    dm=p[5]
+                    dm=max(0,p[5]-bd.wpn[1]["blk"])
                     dm+=randint(max(-1,-floor(dm/5)),max(1,ceil(dm/5)))
                     tprint("You attack for",dm,"damage!")
                     bd.hp-=dm
@@ -343,7 +344,8 @@ def fight():
         else:
             print("It's",bd.nm+"'s turn!")
             print(bd)
-            dm=bd.atk
+            print(bd.sw())
+            dm=bd.atk+bd.wpn[1]["atk"]
             dm+=randint(-floor(dm/5),ceil(dm/5))
             tprint(bd.nm,"attacks for",dm,"damage!")
             p[4]-=dm
@@ -530,6 +532,6 @@ def action():
 # tprint("PS. if you are in trouble we won't rescue you!",sp=10**-15)
 # intput("You should find a handbook in your backpack!",sp=False,inp="Press enter to continue!")
 while True:
-    print("\033c")
+    # print("\033c")
     # action()
     fight()
