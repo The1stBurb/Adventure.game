@@ -2,7 +2,7 @@ from random import choice,randint,random
 import sys
 from time import sleep,perf_counter
 from math import floor,ceil
-from adventureSupp import bads,bg
+from adventureSupp import bads,bg,efff
 def sm(n):
     n=int(n)
     ks={"1":"st","2":"nd","3":"rd"}
@@ -59,7 +59,8 @@ def gt():
     return perf_counter()
 strt=gt()
 tme=[gt(),gt(),[4.25,0]]
-p=[0,0,[["Handbook",1]],{},100,1,0]
+p=[0,0,[["Handbook",1],["seed",19032513265]],{},100,1,0]
+instaBuild=False
 #x map, y map, inv[name, amnt],effects,hp,atk,hunger
 def tmr():
     global tme
@@ -115,25 +116,35 @@ def bfix():
 mater={
     "nothing":["None"],
     "handbook":["read"],
+
     "grass":["eat","burn"],
     "hemp":["eat","burn"],
     "seed":["eat","throw","burn"],
-    "wood":["build","throw","burn"],
     "leaf":["eat","burn"],
     "apple":["eat","throw"],
     "water":["eat"],
-    "rock":["build","throw"],
     "fish":["eat","throw"],
+    
+    "wood":["build","throw","burn"],
+    "rock":["build","throw"],
     "coal":["throw","burn"],
     "iron":["throw","build"],
+
+    "fire":["equip"],
     "pickaxe":["equip"],
     "axe":["equip"],
     "sword":["equip"],
-    "swrod":["equip"],}
+    "swrod":["equip"],
+    "sword of fire":["equip"],
+    }
 craft={
     "fire":[[["wood","coal"],5],1],
     "house":[["wood",50],2],
     "pickaxe":[[["rock","iron"],[4,2]],["wood",2],3],
+    "axe":[["wood",2],[["iron","rock"],[3,6]],4],
+    "sword":[["wood",2],[["iron","rock"],[4,5]],5],
+    "swrod":[["wood",3],["iron",8],6],
+    "Sword of Fire":[["rock",4],["iron",5],["fire",1],7],
 }
 def build():
     global craft,mater,p
@@ -176,48 +187,50 @@ def build():
     # print(rsc)
     # mx={}
     gd=False
-    for i in rsc:
-        gd=False
-        mx={}
-        nal=True if isinstance(i[0],list) else False
-        nul=True if isinstance(i[1],list) else False
-        # print(nal,nul)
-        #bbl is what u have
-        #if nal than it is or
-        #else normal
-        if nal:
-            if nul:
-                for l in range(len(i[0])):
-                    if i[0][l]in bbl and bbl[i[0][l]][0]>=i[1][l]:
-                        gd=[i[0][l],i[1][l]]
-                        break
+    if instaBuild==False:
+        for i in rsc:
+            gd=False
+            mx={}
+            nal=True if isinstance(i[0],list) else False
+            nul=True if isinstance(i[1],list) else False
+            # print(nal,nul)
+            #bbl is what u have
+            #if nal than it is or
+            #else normal
+            if nal:
+                if nul:
+                    for l in range(len(i[0])):
+                        if i[0][l]in bbl and bbl[i[0][l]][0]>=i[1][l]:
+                            gd=[i[0][l],i[1][l]]
+                            break
+                else:
+                    for l in range(len(i[0])):
+                        # print(i[0][l],i[1],bbl[i[0][l]][0])
+                        if i[0][l]in bbl and bbl[i[0][l]][0]>=i[1]:
+                            gd=[i[0][l],i[1]]
+                            break
             else:
-                for l in range(len(i[0])):
-                    # print(i[0][l],i[1],bbl[i[0][l]][0])
-                    if i[0][l]in bbl and bbl[i[0][l]][0]>=i[1]:
-                        gd=[i[0][l],i[1]]
-                        break
-        else:
-            if i[0]in bbl and bbl[i[0]][0]>=i[1]:
-                gd=[i[0],i[1]]
-        # print(gd)
-        if gd==False:
-            break
+                if i[0]in bbl and bbl[i[0]][0]>=i[1]:
+                    gd=[i[0],i[1]]
+            # print(gd)
+            if gd==False:
+                break
+    else:
+        gd=True
     # print(p[2],bbl)
     if gd!=False:
-        p[2][bbl[gd[0]][1]][1]-=gd[1]
+        if instaBuild==False:
+            p[2][bbl[gd[0]][1]][1]-=gd[1]
+        if bld.lower()in mater and"equip"in mater[bld.lower()]:
+            p[2].append([bld,1])
+        else:
+            mp[p[1]][p[0]][1].append(bld)
     # print(p[2])
     bfix()
+    print("You built a",bld+".\n")
+    intput("Press enter to continue!")#,p[2],mp[p[1]][p[0]]
     # quit()
-eff={
-    "":" have no effects!",
-    "hyd":" got hydrated!",
-    "fire":"r on fire!!",
-    "pois":"v'e been poisoned!",
-    "haluc":"r halucinating!",
-    "unc":"r unconscious!",
-    "wind":"r winded!",
-}
+
 eatr={
     #name:hunger/hp+,effects  "":[,[]],
     "grass":[0.1,[]],
@@ -250,6 +263,7 @@ def eat():
             amn=bbl[wh.lower()][0]
     else:
         amn=1
+    amn=min(1000,amn)
     hpp=eatr[wh.lower()]
     eff=[""]
     if len(hpp[1])>0:
