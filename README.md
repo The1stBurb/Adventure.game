@@ -9,6 +9,7 @@ to do
 * make it so you can get weapons
 * make enemies drop stuff. Fight sys should be done here
 * make build sys work
+* spelling
 * LOTS more this is still really a WIP.py project
 
 has:
