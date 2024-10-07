@@ -4,8 +4,7 @@ basically a game i making
 
 to do
 * ~~make fightin sys better~~ mostly
-* ~~make it so you can get tools~~ yep
-* make it so you can use said tools
+* tools! ah
 * make it so you can get weapons
 * make enemies drop stuff. Fight sys should be done here
 * make build sys work

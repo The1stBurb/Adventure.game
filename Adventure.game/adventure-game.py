@@ -2,7 +2,7 @@ from random import choice,randint,random
 import sys
 from time import sleep,perf_counter
 from math import floor,ceil
-from adventureSupp import bads,bg,efff
+from adventureSupp import bads,bg,eff
 def sm(n):
     n=int(n)
     ks={"1":"st","2":"nd","3":"rd"}
@@ -531,5 +531,5 @@ def action():
 # intput("You should find a handbook in your backpack!",sp=False,inp="Press enter to continue!")
 while True:
     print("\033c")
-    action()
-    # fight()
+    # action()
+    fight()
