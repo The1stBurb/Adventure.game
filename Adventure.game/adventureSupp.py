@@ -17,11 +17,17 @@ eff={
     "conc":" have a concussion",# can lead to "unc"
     "fell":" fell",
 }
+#L1->not really wepon,L2->basic wepon,L3->better wepon,L4->really good wepon,L5->mythic
 wepon={
+    #L1
     "axe":{"blk":2,"atk":4,"desc":"an axe, aight?","eff":[],},
     "pickaxe":{"blk":1,"atk":2,"desc":"not very good wepon","eff":[],},
+    #L2
     "sword":{"blk":2,"atk":5,"desc":"pokey staff thing","eff":[],},
     "swrod":{"blk":4,"atk":5,"desc":"better pokey staff","eff":[],},
+    #L3
+    #L4
+    #L5
     "sword of fire":{"blk":2,"atk":6,"desc":"a pokey staff that makes fire","eff":["fire"],},
     "sword of water":{"blk":4,"atk":5,"desc":"a pokey staff that makes water","eff":["hyd"],},
     "sword of air":{"blk":1,"atk":9,"desc":"a pokey staff that makes air","eff":["wind"],},
