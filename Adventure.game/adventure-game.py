@@ -487,7 +487,7 @@ def action():
     if len(p[3])==0:
         tprint("You"+eff[""])
     tprint("You are on a",["None","field","forest","river","moustain"][tle],"tile!")
-    inp=intput("You can:\n 1. Explore\n 2. Build\n 3. Eat\n 4. Rest\n 5. Look for resources\n 6. Open your backpack",sp=0.001)
+    inp="6"#intput("You can:\n 1. Explore\n 2. Build\n 3. Eat\n 4. Rest\n 5. Look for resources\n 6. Open your backpack",sp=0.001)
     print()
     match inp:
         case "1":
@@ -521,14 +521,26 @@ def action():
                 p[2].append(i)
             bfix()
         case "6":
+            bbl={}
             for i in p[2]:
                 tprint(str(i[1])+"x",i[0])
-            e=intput("Would you like to equip any thing?(y/n) ")
-            if e!="y":
-                continue
-            for a,i in enumerate(p[6]):
-                print(str(a)+".",i)
-            # print("6")
+                bbl[i[0].lower()]=[i[1],a]
+            e="y"#intput("Would you like to equip any thing?(y/n) ")
+            while True:
+                if e!="y":
+                    break
+                print()
+                eq=intput("What would you like to equip? ")
+                if not eq.lower() in bbl:
+                    continue
+                # continue
+                for a,i in enumerate(p[7]):
+                    print(str(a+1)+".",i)
+                eqt=intput("Which would you like to equip",eq,"to? ")
+                if not eqt.lower() in p[7]:
+                    continue
+                p[2][bbl[eq.lower()][1]][1],p[7][eqt]=p[7][eqt],p[2][bbl[eq.lower()][1]][1]
+                break
         case "stats":
             tprint("HP:",p[4],"\nEffects:",p[3])
             intput("press enter")
@@ -540,5 +552,5 @@ def action():
 # intput("You should find a handbook in your backpack!",sp=False,inp="Press enter to continue!")
 while True:
     # print("\033c")
-    # action()
-    fight()
+    action()
+    # fight()
