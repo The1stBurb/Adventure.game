@@ -47,13 +47,14 @@ eff={
 def cap(txt):
     return txt[0].upper()+txt[1:]
 class bg:
-    def __init__(self,name,hp,atk,wpn=[""]):
+    def __init__(self,name,hp,atk,wpn=[""],b=1):
         # print(wpn)
-        wpn=choice(wpn)#+["","","","","",""]
         # print(wpn,"ch")
-        if wpn=="sword of":
-            wpn=wpn+choice([" fire"," water"," air"," earth"])
-        self.nm,self.hp,self.atk,self.wpn=name,hp,atk,[wepon[wpn],wpn]
+        if b==1:
+            wpn=choice(wpn+["","","","","",""])
+            if wpn=="sword of":
+                wpn=wpn+choice([" fire"," water"," air"," earth"])
+        self.nm,self.hp,self.atk,self.wpn=name,hp,atk,[wepon[wpn],wpn]if not isinstance(wpn,list)else wpn
     def sw(self):
         if self.wpn[1]!="":
             return f"Weapon: {cap(self.wpn[1])}\n  BLK: {self.wpn[0]["blk"]}\n  ATK: {self.wpn[0]["atk"]}\n\n"
@@ -61,19 +62,20 @@ class bg:
     def __str__(self):
         return f"{self.nm}:\n  HP: {self.hp}\n  Atk: {self.atk}"
 bads=[#bg("squirrle",5,1),
-      bg("Oger",10,5,wpn=["club","club","club","great club"]),
-    #   bg("Trul",10,3,["club","club","club","great club","sword"]),
-    #   bg("Rok",15,3,["club"]),
-    #   bg("Duckinz",7,2),
-    #   bg("Burbostym",20,5,["staff","staff","staf","sword","staff","staff","swrod"]),
-    #   bg("Kajs Kaf",3,1,["staff","staf","sword","swrod","axe","club","great sword","great club","sword of"]),
-    #   bg("Feral dohg",5,3),
-    #   bg("Asplig",10,2,["sword of","sword of","sword","swrod","great club","grear sword","staff","staf"]),
-    #   bg("Duklahf",25,2,["sword of","sword","swrod","great sword","greater sword","great swrod","greater swrod","staf"]),
+      bg("Oger",10,5,["club","club","club","great club"],0),
+    #   bg("Trul",10,3,["club","club","club","great club","sword"],0),
+    #   bg("Rok",15,3,["club"],0),
+    #   bg("Duckinz",7,2,0),
+    #   bg("Burbostym",20,5,["staff","staff","staf","sword","staff","staff","swrod"],0),
+    #   bg("Kajs Kaf",3,1,["staff","staf","sword","swrod","axe","club","great sword","great club","sword of"],0),
+    #   bg("Feral dohg",5,3,[],0),
+    #   bg("Asplig",10,2,["sword of","sword of","sword","swrod","great club","grear sword","staff","staf"],0),
+    #   bg("Duklahf",25,2,["sword of","sword","swrod","great sword","greater sword","great swrod","greater swrod","staf"],0),
 
-    #   bg("Afurnlin",10.5,1.5,["sword of","sword","swrod","great sword","greater sword","great swrod","greater swrod","staf","club","great club","sword of","sword of"]),
-    #   bg("Credlin",5,7,["sword of","sword","swrod","great sword","greater sword","great swrod","greater swrod","staf","club","great club","sword of","sword of"]),
-    #   bg("Bohglin",6,6,["sword of","sword","swrod","great sword","greater sword","great swrod","greater swrod","staf","club","great club","sword of","sword of"]),
-    #   bg("Eiatlin",7,5,["sword of","sword","swrod","great sword","greater sword","great swrod","greater swrod","staf","club","great club","sword of","sword of"]),
-    #   bg("Afurlin",9,3,["sword of","sword","swrod","great sword","greater sword","great swrod","greater swrod","staf","club","great club","sword of","sword of"]),
-    ]#bg("",,),
+    #   bg("Afurnlin",10.5,1.5,["sword of","sword","swrod","great sword","greater sword","great swrod","greater swrod","staf","club","great club","sword of","sword of"],0),
+    #   bg("Credlin",5,7,["sword of","sword","swrod","great sword","greater sword","great swrod","greater swrod","staf","club","great club","sword of","sword of"],0),
+    #   bg("Bohglin",6,6,["sword of","sword","swrod","great sword","greater sword","great swrod","greater swrod","staf","club","great club","sword of","sword of"],0),
+    #   bg("Eiatlin",7,5,["sword of","sword","swrod","great sword","greater sword","great swrod","greater swrod","staf","club","great club","sword of","sword of"],0),
+    #   bg("Afurlin",9,3,["sword of","sword","swrod","great sword","greater sword","great swrod","greater swrod","staf","club","great club","sword of","sword of"],0),
+    ]#bg("",,[],0),
+p=[0,0,[["Handbook",1],["seed",19032513265]],{},100,1,0,{"helmet":[],"chestplate":[],"right_hand":[],"left_hand":[],"pants":[],"boots":[],}]

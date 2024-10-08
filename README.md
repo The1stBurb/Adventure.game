@@ -3,8 +3,8 @@ asd
 basically a game i making
 
 to do
-* ~~make fightin sys better~~ mostly
-* tools! ah
+* ~~make fightin sys better~~ ~~mostly~~ almost there
+* ~~tools!~~ uhm sorta
 * make it so you can get weapons
 * make enemies drop stuff. Fight sys should be done here
 * make build sys work
@@ -26,4 +26,5 @@ has:
 
 
 pls play!  
-# also feedback/bug testing would be great
+##### also feedback/bug testing would be great
+ahfl aksa dvms mkasd cmkds vmkds! kjgabdkjdf dkjs jdas ojga dga kj dgaskj dga kj dgakljgakj gakj dgakj dgaklj gan gakljnga!

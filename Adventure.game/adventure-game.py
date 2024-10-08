@@ -2,7 +2,7 @@ from random import choice,randint,random
 import sys
 from time import sleep,perf_counter
 from math import floor,ceil
-from adventureSupp import bads,bg,eff
+from adventureSupp import bads,bg,eff,p
 def sm(n):
     n=int(n)
     ks={"1":"st","2":"nd","3":"rd"}
@@ -59,7 +59,6 @@ def gt():
     return perf_counter()
 strt=gt()
 tme=[gt(),gt(),[4.25,0]]
-p=[0,0,[["Handbook",1],["seed",19032513265]],{},100,1,0]
 instaBuild=False
 #x map, y map, inv[name, amnt],effects,hp,atk,hunger
 def tmr():
@@ -97,6 +96,7 @@ def upMp(d):
         mp.append([[randint(1,4),[]]for i in range(len(mp[0]))])
         p[1]=len(mp)-1
     return ["None","field","forest","river","moustain"][mp[p[1]][p[0]][0]]
+#my horse: 🐎
 def adBi(itm):
     global mp,p
     mp[p[1]][p[0]][1].append()
@@ -323,7 +323,7 @@ def fight():
             dor=intput("What would you like to do?\n 1. Attack\n 2. Dodge\n 3. Run")
             match dor:
                 case "1":
-                    dm=max(0,p[5]-bd.wpn[1]["blk"])
+                    dm=max(0,p[5]-bd.wpn[0]["blk"])
                     dm+=randint(max(-1,-floor(dm/5)),max(1,ceil(dm/5)))
                     tprint("You attack for",dm,"damage!")
                     bd.hp-=dm
@@ -338,6 +338,9 @@ def fight():
                         continue
                     else:
                         print("You weren't able to run!")
+                case "womp womp":
+                    print("KO")
+                    bd.hp=-1
                 case _:
                     continue
             sleep(0.5)
@@ -345,7 +348,7 @@ def fight():
             print("It's",bd.nm+"'s turn!")
             print(bd)
             print(bd.sw())
-            dm=bd.atk+bd.wpn[1]["atk"]
+            dm=bd.atk+bd.wpn[0]["atk"]
             dm+=randint(-floor(dm/5),ceil(dm/5))
             tprint(bd.nm,"attacks for",dm,"damage!")
             p[4]-=dm
@@ -520,7 +523,11 @@ def action():
         case "6":
             for i in p[2]:
                 tprint(str(i[1])+"x",i[0])
-            intput("")
+            e=intput("Would you like to equip any thing?(y/n) ")
+            if e!="y":
+                continue
+            for a,i in enumerate(p[6]):
+                print(str(a)+".",i)
             # print("6")
         case "stats":
             tprint("HP:",p[4],"\nEffects:",p[3])
