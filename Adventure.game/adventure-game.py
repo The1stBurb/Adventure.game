@@ -111,7 +111,7 @@ def bfix():
             inv[i[0]]=i[1]
     p[2]=[]
     for i in inv:
-        if inv[i]>0:
+        if inv[i]>0 and i!="none" and i!="":
             p[2].append([i,inv[i]])
 mater={
     "nothing":["None"],
@@ -473,7 +473,8 @@ def hpr():
 def action():
     # print(p[6])
     if randint(0,5)==0:
-        fight()
+        # fight()
+        pass
     tle=mp[p[0]][p[1]][0]
     tmr()
     effd()
@@ -521,10 +522,11 @@ def action():
                 p[2].append(i)
             bfix()
         case "6":
-            bbl={}
-            for i in p[2]:
+            bbl={"none":0}
+            for a,i in enumerate(p[2]):
                 tprint(str(i[1])+"x",i[0])
                 bbl[i[0].lower()]=[i[1],a]
+            tprint("To unequip: none")
             e="y"#intput("Would you like to equip any thing?(y/n) ")
             while True:
                 if e!="y":
@@ -535,11 +537,17 @@ def action():
                     continue
                 # continue
                 for a,i in enumerate(p[7]):
-                    print(str(a+1)+".",i)
+                    print(str(a+1)+".",i,"-",p[7][i][0])
                 eqt=intput("Which would you like to equip",eq,"to? ")
                 if not eqt.lower() in p[7]:
                     continue
-                p[2][bbl[eq.lower()][1]][1],p[7][eqt]=p[7][eqt],p[2][bbl[eq.lower()][1]][1]
+                p[2].append(p[7][eqt].copy())
+                if eq.lower()!="none":
+                    p[2][bbl[eq.lower()][1]][1]-=1
+                    p[7][eqt]=p[2][bbl[eq.lower()][1]].copy()
+                p[7][eqt][1]=1
+                bfix()
+                intput()
                 break
         case "stats":
             tprint("HP:",p[4],"\nEffects:",p[3])

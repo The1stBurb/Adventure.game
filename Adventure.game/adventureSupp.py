@@ -78,4 +78,4 @@ bads=[#bg("squirrle",5,1),
     #   bg("Eiatlin",7,5,["sword of","sword","swrod","great sword","greater sword","great swrod","greater swrod","staf","club","great club","sword of","sword of"],0),
     #   bg("Afurlin",9,3,["sword of","sword","swrod","great sword","greater sword","great swrod","greater swrod","staf","club","great club","sword of","sword of"],0),
     ]#bg("",,[],0),
-p=[0,0,[["Handbook",1],["seed",19032513265]],{},100,1,0,{"helmet":[],"chestplate":[],"right_hand":[],"left_hand":[],"pants":[],"boots":[],}]
+p=[0,0,[["Handbook",1],["seed",19032513265]],{},100,1,0,{"helmet":["",0],"chestplate":["",0],"right_hand":["",0],"left_hand":["",0],"pants":["",0],"boots":["",0],}]
