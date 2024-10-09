@@ -323,7 +323,8 @@ def fight():
             dor=intput("What would you like to do?\n 1. Attack\n 2. Dodge\n 3. Run")
             match dor:
                 case "1":
-                    dm=max(0,p[5]-bd.wpn[0]["blk"])
+                    pb=wepon[p[7]["helmet"][0]]["atk"]+wepon[p[7]["chestplate"][0]]["atk"]+wepon[p[7]["left_hand"][0]]["atk"]+wepon[p[7]["right_hand"][0]]["atk"]+wepon[p[7]["pants"][0]]["atk"]+wepon[p[7]["boots"][0]]["atk"]
+                    dm=max(0,p[5]-bd.wpn[0]["blk"]+pb)
                     dm+=randint(max(-1,-floor(dm/5)),max(1,ceil(dm/5)))
                     tprint("You attack for",dm,"damage!")
                     bd.hp-=dm
