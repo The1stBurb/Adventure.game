@@ -2,7 +2,7 @@ from random import choice,randint,random
 import sys
 from time import sleep,perf_counter
 from math import floor,ceil
-from adventureSupp import bads,bg,eff,p,wepon,effd
+from adventureSupp import bads,bg,eff,p,wepon,effd,spls
 def sm(n):
     n=int(n)
     ks={"1":"st","2":"nd","3":"rd"}
@@ -305,15 +305,15 @@ def fight():
     global p,bads
     bd=choice(bads)
     bd=bg(bd.nm,bd.hp,bd.atk,bd.wpn)
-    print(bd)
-    print(bd.sw())
+    tprint(bd)
+    tprint(bd.sw())
     t=1
     fg=True
     while fg:
         if t==1:
-            print("It's your turn!")
-            print(" HP:",p[4],"\n ATK:",p[5])
-            dor=intput("What would you like to do?\n 1. Attack\n 2. Dodge\n 3. Run")
+            tprint("It's your turn!")
+            tprint(" HP:",p[4],"\n ATK:",p[5])
+            dor=intput("What would you like to do?\n 1. Attack\n 2. Dodge\n 3. Run\n 4. Spell")
             match dor:
                 case "1":
                     # print(p[7]["helmet"])
@@ -322,7 +322,7 @@ def fight():
                     # print(wepon[p[7]["helmet"][0]]["atk"])
                     pb=wepon[p[7]["helmet"][0]]["atk"]+wepon[p[7]["chestplate"][0]]["atk"]+wepon[p[7]["left_hand"][0]]["atk"]+wepon[p[7]["right_hand"][0]]["atk"]+wepon[p[7]["pants"][0]]["atk"]+wepon[p[7]["boots"][0]]["atk"]
                     dm=max(0,p[5]-bd.wpn[0]["blk"]+pb)
-                    dm+=randint(max(-1,-floor(dm/5)),max(1,ceil(dm/5)))
+                    dm+=randint(min(-1,-floor(dm/5)),max(1,ceil(dm/5)))
                     tprint("You attack for",dm,"damage!")
                     bd.hp-=dm
                     # print("ouch")
@@ -336,6 +336,19 @@ def fight():
                         continue
                     else:
                         print("You weren't able to run!")
+                case "4":
+                    for i in spls:
+                        print(i)
+                    sp=intput("What would you like to spell? ")
+                    if sp in spls:
+                        dm=max(0,spls[sp]["dmg"]-(bd.wpn[0]["blk"]/2))
+                        dm+=randint(min(-1,-floor(dm/5)),max(1,ceil(dm/5)))
+                        tprint("You attack for",dm,"damage!")
+                        bd.hp-=dm
+                        dm=spls[sp]["hel"]
+                        dm+=randint(min(-1,-floor(dm/5)),max(1,ceil(dm/5)))
+                        tprint("You heal for",dm,"HP!")
+                        p[4]+=dm
                 case "womp womp":
                     print("KO")
                     bd.hp=-1
@@ -343,9 +356,9 @@ def fight():
                     continue
             sleep(0.5)
         else:
-            print("It's",bd.nm+"'s turn!")
-            print(bd)
-            print(bd.sw())
+            tprint("It's",bd.nm+"'s turn!")
+            tprint(bd)
+            tprint(bd.sw())
             # print(p[7]["helmet"])
             pb=wepon[p[7]["helmet"][0]]["blk"]+wepon[p[7]["chestplate"][0]]["blk"]+wepon[p[7]["left_hand"][0]]["blk"]+wepon[p[7]["right_hand"][0]]["blk"]+wepon[p[7]["pants"][0]]["blk"]+wepon[p[7]["boots"][0]]["blk"]
             # print(pb)
@@ -477,7 +490,7 @@ def hpr():
     return fel
 def action():
     # print(p[6])5
-    if randint(0,5)==6:
+    if randint(0,0)==0:
         fight()
         pass
     tle=mp[p[0]][p[1]][0]
