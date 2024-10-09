@@ -348,8 +348,9 @@ def fight():
             print("It's",bd.nm+"'s turn!")
             print(bd)
             print(bd.sw())
-            pb=wepon(p[7]["helmet"])["blk"]+wepon(p[7]["chestplate"])["blk"]+wepon(p[7]["left_hand"])["blk"]+wepon(p[7]["right_hand"])["blk"]+wepon(p[7]["pants"])["blk"]+wepon(p[7]["boots"])["blk"]
-            print(pb)
+            # print(p[7]["helmet"])
+            pb=wepon[p[7]["helmet"][0]]["blk"]+wepon[p[7]["chestplate"][0]]["blk"]+wepon[p[7]["left_hand"][0]]["blk"]+wepon[p[7]["right_hand"][0]]["blk"]+wepon[p[7]["pants"][0]]["blk"]+wepon[p[7]["boots"][0]]["blk"]
+            # print(pb)
             dm=max(0,bd.atk+bd.wpn[0]["atk"]-pb)
             dm+=randint(-floor(dm/5),ceil(dm/5))
             tprint(bd.nm,"attacks for",dm,"damage!")

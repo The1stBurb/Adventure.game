@@ -57,8 +57,8 @@ class bg:
         self.nm,self.hp,self.atk,self.wpn=name,hp,atk,[wepon[wpn],wpn]if not isinstance(wpn,list)else wpn
     def sw(self):
         if self.wpn[1]!="":
-            return f"Weapon: {cap(self.wpn[1])}\n  BLK: {self.wpn[0]["blk"]}\n  ATK: {self.wpn[0]["atk"]}\n\n"
-        return "\n"
+            return f"Weapon: {cap(self.wpn[1])}\n  BLK: {self.wpn[0]["blk"]}\n  ATK: {self.wpn[0]["atk"]}\n"
+        return ""
     def __str__(self):
         return f"{self.nm}:\n  HP: {self.hp}\n  Atk: {self.atk}"
 bads=[#bg("squirrle",5,1),
@@ -78,4 +78,4 @@ bads=[#bg("squirrle",5,1),
       bg("Eiatlin",7,5,["sword of","sword","swrod","great sword","greater sword","great swrod","greater swrod","staf","club","great club","sword of","sword of"],0),
       bg("Afurlin",9,3,["sword of","sword","swrod","great sword","greater sword","great swrod","greater swrod","staf","club","great club","sword of","sword of"],0),
     ]#bg("",,[],0),
-p=[0,0,[["Handbook",1],["seed",19032513265]],{},100,1,0,{"helmet":["",0],"chestplate":["",0],"right_hand":["",0],"left_hand":["",0],"pants":["",0],"boots":["",0],}]
+p=[0,0,[["Handbook",1]],{},100,1,0,{"helmet":["",0],"chestplate":["",0],"right_hand":["",0],"left_hand":["",0],"pants":["",0],"boots":["",0],}]
