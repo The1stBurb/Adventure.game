@@ -323,6 +323,10 @@ def fight():
             dor=intput("What would you like to do?\n 1. Attack\n 2. Dodge\n 3. Run")
             match dor:
                 case "1":
+                    # print(p[7]["helmet"])
+                    # print(p[7]["helmet"][0])
+                    # print(wepon[p[7]["helmet"][0]])
+                    # print(wepon[p[7]["helmet"][0]]["atk"])
                     pb=wepon[p[7]["helmet"][0]]["atk"]+wepon[p[7]["chestplate"][0]]["atk"]+wepon[p[7]["left_hand"][0]]["atk"]+wepon[p[7]["right_hand"][0]]["atk"]+wepon[p[7]["pants"][0]]["atk"]+wepon[p[7]["boots"][0]]["atk"]
                     dm=max(0,p[5]-bd.wpn[0]["blk"]+pb)
                     dm+=randint(max(-1,-floor(dm/5)),max(1,ceil(dm/5)))
@@ -480,7 +484,7 @@ def hpr():
     return fel
 def action():
     # print(p[6])5
-    if randint(0,0)==0:
+    if randint(0,5)==0:
         fight()
         pass
     tle=mp[p[0]][p[1]][0]
@@ -556,6 +560,8 @@ def action():
                 if eq.lower()!="none":
                     p[2][bbl[eq.lower()][1]][1]-=1
                     p[7][eqt]=p[2][bbl[eq.lower()][1]].copy()
+                if not p[7][eqt][0]in wepon:
+                    wepon[p[7][eqt][0]]={"blk":0,"atk":0,"desc":"not a wepon","eff":[],}
                 p[7][eqt][1]=1
                 bfix()
                 intput()

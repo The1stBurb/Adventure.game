@@ -22,7 +22,7 @@ has:
 * eating sys -- most fun sys of them all
 * rest sys -- least usefull or necesary
 * find resources sys -- brokenish, in combo with food really broken
-* backpack sys -- just an inv sys
+* backpack sys -- just an inv sys, you can equip stuff
 * 1, kinda 2, hidden features
 
 
