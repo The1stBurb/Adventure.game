@@ -2,7 +2,7 @@ from random import choice,randint,random
 import sys
 from time import sleep,perf_counter
 from math import floor,ceil
-from adventureSupp import bads,bg,eff,p,wepon
+from adventureSupp import bads,bg,eff,p,wepon,effd
 def sm(n):
     n=int(n)
     ks={"1":"st","2":"nd","3":"rd"}
@@ -60,7 +60,6 @@ def gt():
 strt=gt()
 tme=[gt(),gt(),[4.25,0]]
 instaBuild=False
-#x map, y map, inv[name, amnt],effects,hp,atk,hunger
 def tmr():
     global tme
     pt,ct=tme[1],gt()
@@ -282,13 +281,7 @@ def eat():
     p[4]+=hpp
     tprint("You eat the",wh,"and it gives you",hpp,"HP points!","\nYou get the effect: "+eff[-1] if eff[-1]!="" else"")
     bfix()
-def effd():
-    global p
-    for i in p[3]:
-        # print(i)
-        if randint(0,3)==0:
-            p[3][i]-=1
-            # print(i)
+
 def hgr():
     global p
     txt="dead from starving"
@@ -484,7 +477,7 @@ def hpr():
     return fel
 def action():
     # print(p[6])5
-    if randint(0,5)==0:
+    if randint(0,5)==6:
         fight()
         pass
     tle=mp[p[0]][p[1]][0]
@@ -571,7 +564,7 @@ def action():
             intput("press enter")
         case _:
             tprint("Woops! Not an action!")
-    sleep(0.5)
+    sleep(0.2)
 # tprint("Welcome to this world! If you don't remember, like most, you have been selected to test this newly found world! Explore, because we are using YOU to find out if humans can live here! The country thanks you for your work!")
 # tprint("PS. if you are in trouble we won't rescue you!",sp=10**-15)
 # intput("You should find a handbook in your backpack!",sp=False,inp="Press enter to continue!")

@@ -1,4 +1,4 @@
-from random import choice
+from random import choice,randint
 wepon={
     #L1
     "":{"blk":0,"atk":0,"desc":"not a wepaon","eff":[],},
@@ -32,6 +32,8 @@ wepon={
     "doomstaff":{"blk":15,"atk":15,"desc":"bringer of doom","eff":["dyi","conc","conc","wind","unc","unc"],},
 }#"":{"blk":,"atk":,"desc":"","eff":[],},
 #L1->not really wepon,L2->basic wepon,L3->better wepon,L4->really good wepon,L5->mythic
+p=[0,0,[["Handbook",1],["seed",100]],{},100,1,0,{"helmet":["",0],"chestplate":["",0],"right_hand":["",0],"left_hand":["",0],"pants":["",0],"boots":["",0],}]
+#0-x map, 1-y map, 2-inv[name, amnt],3-effects,4-hp,5-atk,6-hunger,7-equiped
 eff={
     "":" have no effects!",
     "hyd":" got hydrated!",
@@ -44,6 +46,38 @@ eff={
     "fell":" fell",
     "dyi":"r dying",
 }
+def effd():
+    global p
+    for i in p[3]:
+        # print(i)
+        if p[3][i]>0:
+            if randint(0,2)==0:
+                p[3][i]-=1
+        if randint(0,1)==0:
+            match i:
+                case "hyd":
+                    p[6]+=0.1
+                case "fire":
+                    p[4]-=4
+                case "pois":
+                    p[4]-=2
+                case "haluc":
+                    p[4]+=randint(-1,1)/10
+                    p[6]+=randint(-1,1)/10
+                case "unc":
+                    pass
+                case "conc":
+                    if randint(0,2)==0:
+                        p[3][i]-=1
+                        p[3]["haluc"]+=1
+                case "fell":
+                    p[6]-=5
+                    if randint(0,1)==0:
+                        p[3][i]-=1
+                case "dyi":
+                    p[4]-=(p[4]+10)/2
+        p[6]=min(13,max(0,p[6]))
+        p[4]=max(1,p[4])
 def cap(txt):
     return txt[0].upper()+txt[1:]
 class bg:
@@ -78,4 +112,3 @@ bads=[#bg("squirrle",5,1),
       bg("Eiatlin",7,5,["sword of","sword","swrod","great sword","greater sword","great swrod","greater swrod","staf","club","great club","sword of","sword of"],0),
       bg("Afurlin",9,3,["sword of","sword","swrod","great sword","greater sword","great swrod","greater swrod","staf","club","great club","sword of","sword of"],0),
     ]#bg("",,[],0),
-p=[0,0,[["Handbook",1]],{},100,1,0,{"helmet":["",0],"chestplate":["",0],"right_hand":["",0],"left_hand":["",0],"pants":["",0],"boots":["",0],}]
