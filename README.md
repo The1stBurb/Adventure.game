@@ -10,7 +10,7 @@ to do
 * actually finish fight sys. i will make it so enemies drop MORE
 * make build sys work
 * spelling
-* effects actuall effect you
+* ~~effects actuall effect `you`~~
 * LOTS more this is still really a WIP.py project
 
 has:
