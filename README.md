@@ -4,9 +4,10 @@ basically a game i making
 
 to do
 * ~~make fightin sys better~~ ~~mostly~~ almost there
-* ~~tools!~~ uhm sorta
-* make it so you can get weapons
-* make enemies drop stuff. Fight sys should be done here
+* ~~tools!~~ ~~uhm sorta~~
+* ~~make it so you can get weapons~~
+* ~~make enemies drop stuff.~~ Fight sys should be done here basicaly.
+* actually finish fight sys. i will make it so enemies drop MORE
 * make build sys work
 * spelling
 * LOTS more this is still really a WIP.py project

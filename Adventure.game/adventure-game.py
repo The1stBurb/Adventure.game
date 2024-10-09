@@ -2,7 +2,7 @@ from random import choice,randint,random
 import sys
 from time import sleep,perf_counter
 from math import floor,ceil
-from adventureSupp import bads,bg,eff,p
+from adventureSupp import bads,bg,eff,p,wepon
 def sm(n):
     n=int(n)
     ks={"1":"st","2":"nd","3":"rd"}
@@ -115,7 +115,7 @@ def bfix():
             p[2].append([i,inv[i]])
 mater={
     "nothing":["None"],
-    "handbook":["read"],
+    "handbook":["read","equip"],
 
     "grass":["eat","burn"],
     "hemp":["eat","burn"],
@@ -348,7 +348,9 @@ def fight():
             print("It's",bd.nm+"'s turn!")
             print(bd)
             print(bd.sw())
-            dm=bd.atk+bd.wpn[0]["atk"]
+            pb=wepon(p[7]["helmet"])["blk"]+wepon(p[7]["chestplate"])["blk"]+wepon(p[7]["left_hand"])["blk"]+wepon(p[7]["right_hand"])["blk"]+wepon(p[7]["pants"])["blk"]+wepon(p[7]["boots"])["blk"]
+            print(pb)
+            dm=max(0,bd.atk+bd.wpn[0]["atk"]-pb)
             dm+=randint(-floor(dm/5),ceil(dm/5))
             tprint(bd.nm,"attacks for",dm,"damage!")
             p[4]-=dm
@@ -368,6 +370,10 @@ def fight():
         print("You gain",atp,"ATK!")
         p[4]+=hpp
         p[5]+=atp
+        wnI=bd.wpn if randint(0,2)==0 else [{"hp":0},""]
+        if wnI[1]!="":
+            tprint("You win a",wnI[1]+"!")
+            p[2].append([wnI[1],1])
     intput("Press enter to continue!")
     print("\033c")
 def res(tl):
@@ -471,9 +477,9 @@ def hpr():
         fel="incredibly amazingly over-healthier"
     return fel
 def action():
-    # print(p[6])
-    if randint(0,5)==0:
-        # fight()
+    # print(p[6])5
+    if randint(0,0)==0:
+        fight()
         pass
     tle=mp[p[0]][p[1]][0]
     tmr()
@@ -488,7 +494,7 @@ def action():
     if len(p[3])==0:
         tprint("You"+eff[""])
     tprint("You are on a",["None","field","forest","river","moustain"][tle],"tile!")
-    inp="6"#intput("You can:\n 1. Explore\n 2. Build\n 3. Eat\n 4. Rest\n 5. Look for resources\n 6. Open your backpack",sp=0.001)
+    inp=intput("You can:\n 1. Explore\n 2. Build\n 3. Eat\n 4. Rest\n 5. Look for resources\n 6. Open your backpack",sp=0.001)
     print()
     match inp:
         case "1":
@@ -527,13 +533,16 @@ def action():
                 tprint(str(i[1])+"x",i[0])
                 bbl[i[0].lower()]=[i[1],a]
             tprint("To unequip: none")
-            e="y"#intput("Would you like to equip any thing?(y/n) ")
+            e=intput("Would you like to equip any thing?(y/n) ")
             while True:
                 if e!="y":
                     break
                 print()
                 eq=intput("What would you like to equip? ")
-                if not eq.lower() in bbl:
+                # print(eq,eq.lower()in mater and"equip"in mater[eq.lower()],mater[eq.lower()])
+                if eq.lower()in mater and "equip"in mater[eq.lower()] or eq=="none":
+                    pass
+                else:#if not(eq.lower() in bbl):
                     continue
                 # continue
                 for a,i in enumerate(p[7]):
@@ -559,6 +568,6 @@ def action():
 # tprint("PS. if you are in trouble we won't rescue you!",sp=10**-15)
 # intput("You should find a handbook in your backpack!",sp=False,inp="Press enter to continue!")
 while True:
-    # print("\033c")
+    print("\033c")
     action()
     # fight()
