@@ -1,4 +1,4 @@
-from random import choice,randint,random
+from random import choice,randint,random,sample
 from time import sleep,perf_counter
 from math import floor,ceil
 from adventureSupp import bads,bg,eff,p,wepon,effd,spls,demon
@@ -457,15 +457,19 @@ class shop:
     def __init__(self):
         self.wpn="sword of"+choice([" fire"," water"," air"," earth"])
         self.mon={"mon1":max(0,randint(-2,4)),"mon2":max(0,randint(-1,6)),"mon3":randint(3,10),"mon4":randint(5,15)}
-        self.wre=shabl.copy()
-        for i in range(randint(0,len(shabl)-3)):
-            self.wre=self.wre.pop(choice(self.wre),None)
+        # self.wre=shabl.copy()
+        # for i in range(randint(0,len(shabl)-3)):
+        #     self.wre=self.wre.pop(choice(self.wre),None)
+        selected_keys = sample(list(shabl.keys()), randint(3,len(shabl)-1))
+        self.wre = {key: shabl[key] for key in selected_keys}
         for i in self.wre:
             self.wre[i]=randint(self.wre[i][0],self.wre[i][1])
+        self.nm=choice(["Malmart","the Store","the store","a back alley","Ebuy","Groger","Tearget","11-Seven","Uldi"])
     def __str__(self):
         st=[]
         for i in self.wre:
-            st.append(i+": "+demon(self.wre[i]))
+            st.append(i+": "+str(self.wre[i])+"mon4")#+demon(self.wre[i]))
+        return "Welcome to "+self.nm+"!\n  "+"\n  ".join(st)+"\n"
 
 class house:
     def __init__(self):
@@ -570,5 +574,7 @@ def action():
 # intput("You should find a handbook in your backpack!",sp=False,inp="Press enter to continue!")
 while True:
     print("\033c")
-    action()
+    tprint(shop())
+    intput("")
+    # action()
     # fight()

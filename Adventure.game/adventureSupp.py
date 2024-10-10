@@ -123,9 +123,9 @@ spls={
 }#"":{"dmg":,"eff":[],"hel":},
 def moner(tp,tp2,am):
     con=1
-    #1=3x2
-    #2=4x3
-    #3=5x4
+    #m1=3x m2
+    #m2=4x m3
+    #m3=5x m4
     if tp=="1":
         if tp2=="2":
             con=3
@@ -150,9 +150,21 @@ def moner(tp,tp2,am):
     elif tp=="4":
         if tp2=="1":
             con=1/(3*4*5)
-        elif tp=="2":
+        elif tp2=="2":
             con=1/(4*5)
-        elif tp=="3":
+        elif tp2=="3":
             con=1/5
+    # print(am,con,round(am*con))
     return am-round(round(am*con)/con),round(am*con)
-# print(moner("2","1",10))
+def demon(mon):
+    m={"mon1":0,"mon2":0,"mon3":0,"mon4":0,}
+    for i in [["4","1"],["4","2"],["4","3"]]:
+        wz,iz=moner(i[0],i[1],mon)
+        # print(wz,iz)
+        m["mon"+i[1]]=iz
+        mon=wz
+    m["mon4"]=mon
+    return ", ".join([str(m[i])+" "+i for i in m])
+    # print(m)
+# print(demon((5*4*3)+(4*5)+(5)+(2)))
+print(moner("2","4",10))
