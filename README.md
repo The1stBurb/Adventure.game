@@ -11,7 +11,7 @@ to do
 * make build sys work
 * ~~spelling~~
 * ~~effects actuall effect `you`~~
-* MONEY
+* ~~MONEY~~
 * and so a shop system
 * LOTS more this is still really a WIP.py project
 
