@@ -3,7 +3,7 @@ from time import sleep,perf_counter
 from math import floor,ceil
 from adventureSupp import bads,bg,eff,p,wepon,effd,spls,demon
 from adventureText import tprint,intput,sm
-from adventureBuilds import sv
+from adventureBuilds import sv,unsv
 mp=[[[randint(1,4),[]]]]
 def gt():
     # print(perf_counter_ns())
@@ -524,9 +524,20 @@ def action():
     if len(p[3])==0:
         tprint("You"+eff[""])
     tprint("You are on a",["None","field","forest","river","moustain"][tle],"tile!")
-    inp=intput("You can:\n 1. Explore\n 2. Build\n 3. Eat\n 4. Rest\n 5. Look for resources\n 6. Open your backpack","\n 7. Shop"if bulds["shp"]==True else"",sp=0.001)
+    inp=intput("You can:\n 0. Save a save or Load a save\n 1. Explore\n 2. Build\n 3. Eat\n 4. Rest\n 5. Look for resources\n 6. Open your backpack","\n 7. Shop"if bulds["shp"]==True else"",sp=0.001)
     print()
     match inp:
+        case "0":
+            dor=intput("Would you like to save or load?(s/l) ")
+            if dor=="s":
+                sv(p,tme)
+            elif dor=="l":
+                b=intput("What's your savecode? ")
+                b=unsv(b)
+                p=b[0].copy()
+                tme=b[1].copy()
+            else:
+                tprint("Not poosible!")
         case "1":
             inp=intput("What direction? 1-Up, 2-Right, 3-Down, 4-Left")
             if inp.isdigit()and int(inp)in range(1,5):
@@ -614,7 +625,5 @@ def action():
 while True:
     print("\033c")
     # shop().dor()
-    sv(p,mp,tme)
-    intput("")
-    # action()
+    action()
     # fight()
