@@ -1,59 +1,8 @@
 from random import choice,randint,random
-import sys
 from time import sleep,perf_counter
 from math import floor,ceil
 from adventureSupp import bads,bg,eff,p,wepon,effd,spls
-def sm(n):
-    n=int(n)
-    ks={"1":"st","2":"nd","3":"rd"}
-    return str(n)+(ks[str(n)]if str(n)in ks else"th")
-def txtr(txt):
-    s="qωєятуυισραѕ∂ƒgнנкℓzχ¢νвηмqωєятуυισραѕ∂ƒgнנкℓzχ¢νвηм"#Ⴓ𝑊ɆɌŦɎɄƗØⱣȺSĐFǤĦɈꝀŁƵXȻVɃ₦𝓜ꝗwɇɍŧɏᵾɨøᵽȺຮđfǥħɉꝁłƶxȼงƀᶮ₥"#ϘWƎЯTYUIOꟼAƧႧꟻӘHႱﻼ⅃ZXƆV𐐒ИMpwɘɿtγυioqɒƨbʇϱʜįʞlzxɔvdnm"#ℚ𝕎𝔼ℝ𝕋𝕐𝕌𝕀𝕆ℙ𝔸𝕊𝔻𝔽𝔾ℍ𝕁𝕂𝕃ℤ𝕏ℂ𝕍𝔹ℕ𝕄𝕢𝕨𝕖𝕣𝕥𝕪𝕦𝕚𝕠𝕡𝕒𝕤𝕕𝕗𝕘𝕙𝕛𝕜𝕝𝕫𝕩𝕔𝕧𝕓𝕟𝕞"#𝔔𝔚𝔈ℜ𝔗𝔜𝔘ℑ𝔒𝔓𝔄𝔖𝔇𝔉𝔊ℌ𝔍𝔎𝔏ℨ𝔛ℭ𝔙𝔅𝔑𝔐𝔮𝔴𝔢𝔯𝔱𝔶𝔲𝔦𝔬𝔭𝔞𝔰𝔡𝔣𝔤𝔥𝔧𝔨𝔩𝔷𝔵𝔠𝔳𝔟𝔫𝔪"#"𝕼𝖂𝕰𝕽𝕿𝖄𝖀𝕴𝕺𝕻𝕬𝕾𝕯𝕱𝕲𝕳𝕵𝕶𝕷𝖅𝖃𝕮𝖁𝕭𝕹𝕸𝖖𝖜𝖊𝖗𝖙𝖞𝖚𝖎𝖔𝖕𝖆𝖘𝖉𝖋𝖌𝖍𝖏𝖐𝖑𝖟𝖝𝖈𝖛𝖇𝖓𝖒"
-    s2="QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm"
-    st=""
-    for i in txt:
-        ind=s2.find(i)
-        # print(ind,i,s[ind],"}")
-        if ind!=-1:
-            st+=s[ind]
-            # if i=="m"or i=="w":
-            #     st+=" "
-        else:
-            st+=i
-    return st#txt
-def tprint(*text,sp=False):
-    sp=10**-15
-    # print(type(text))
-    # if isinstance(text[0],tuple):
-    #     text=text[0]
-    if isinstance(text,tuple):
-        txt=[]
-        for i in text:
-            txt.append(str(i))
-        text=" ".join(txt)
-    text=txtr(text)
-    punctuation = {
-    "." : 0.25,
-    "!" : 0.15,
-    "?" : 0.15,
-    "," : 0.05,
-    ":" : 0.1,
-    "\n":0,
-    }
-    for char in text:
-        sys.stdout.write(char)
-        sys.stdout.flush()
-        if char in punctuation:
-            sleep(0)#punctuation[char])
-        else:
-            r=random()/2+0.5
-            sleep(r*(0.05 if sp==False else sp))
-    print()
-    # time.sleep(0.25)
-def intput(*txt,sp=0.005,inp=""):
-    tprint(*txt,sp=sp)
-    # print(txt)
-    return input(inp+" >> ")
+from adventureText import tprint,intput,sm
 def gt():
     # print(perf_counter_ns())
     return perf_counter()
@@ -135,9 +84,12 @@ mater={
     "sword":["equip"],
     "swrod":["equip"],
     "sword of fire":["equip"],
+    "house":["place"],
+    "firepit":["place"],
     }
 craft={
-    "fire":[[["wood","coal"],5],1],
+    "fire":[[["wood","coal"],2],1],
+    "firepit":[["fire",1],[["wood","coal"],5],8],
     "house":[["wood",50],2],
     "pickaxe":[[["rock","iron"],[4,2]],["wood",2],3],
     "axe":[["wood",2],[["iron","rock"],[3,6]],4],
@@ -226,7 +178,7 @@ def build():
         if bld.lower()in mater and"equip"in mater[bld.lower()]:
             p[2].append([bld,1])
         else:
-            mp[p[1]][p[0]][1].append(bld)
+            mp[p[1]][p[0]][1].append(bld.lower())
     # print(p[2])
     bfix()
     print("You built a",bld+".\n")
@@ -390,6 +342,10 @@ def fight():
         if wnI[1]!="":
             tprint("You win a",wnI[1]+"!")
             p[2].append([wnI[1],1])
+        tprint("It had:")
+        for i in bd.mon:
+            tprint(" ",bd.mon[i],i)
+            p[8][i]+=bd.mon[i]
     intput("Press enter to continue!")
     print("\033c")
 def res(tl):
@@ -494,7 +450,7 @@ def hpr():
     return fel
 def action():
     # print(p[6])5
-    if randint(0,0)==0:
+    if randint(0,5)==0:
         fight()
         pass
     tle=mp[p[0]][p[1]][0]
@@ -503,6 +459,7 @@ def action():
     # print(tme,"\n",round(tme[1]-strt))
     vrb=str(floor(tme[2][0]*100))
     tprint("Its the",sm(floor(tme[2][1]+1)),"day. It's",("0"*(4-len(vrb)))+vrb,"o'clock.")
+    tprint()
     tprint("You feel",hpr()+",",dcyc(),"and",hgr()+".")
     for i in p[3]:
         if p[3][i]>0:
@@ -544,6 +501,9 @@ def action():
                 p[2].append(i)
             bfix()
         case "6":
+            tprint("Your monetary value:")
+            for i in p[8]:
+                tprint(" ",str(p[8][i])+i)
             bbl={"none":0}
             for a,i in enumerate(p[2]):
                 tprint(str(i[1])+"x",i[0])

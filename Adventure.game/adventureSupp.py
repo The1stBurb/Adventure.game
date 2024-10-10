@@ -32,7 +32,7 @@ wepon={
     "doomstaff":{"blk":15,"atk":15,"desc":"bringer of doom","eff":["dyi","conc","conc","wind","unc","unc"],},
 }#"":{"blk":,"atk":,"desc":"","eff":[],},
 #L1->not really wepon,L2->basic wepon,L3->better wepon,L4->really good wepon,L5->mythic
-p=[0,0,[["Handbook",1],["seed",100]],{},100,1,0,{"helmet":["",0],"chestplate":["",0],"right_hand":["",0],"left_hand":["",0],"pants":["",0],"boots":["",0],}]
+p=[0,0,[["Handbook",1],["seed",100]],{},100,1,0,{"helmet":["",0],"chestplate":["",0],"right_hand":["",0],"left_hand":["",0],"pants":["",0],"boots":["",0],},{"mon1":0,"mon2":0,"mon3":0,"mon4":0,}]
 #0-x map, 1-y map, 2-inv[name, amnt],3-effects,4-hp,5-atk,6-hunger,7-equiped
 eff={
     "":" have no effects!",
@@ -89,6 +89,7 @@ class bg:
             if wpn=="sword of":
                 wpn=wpn+choice([" fire"," water"," air"," earth"])
         self.nm,self.hp,self.atk,self.wpn=name,hp,atk,[wepon[wpn],wpn]if not isinstance(wpn,list)else wpn
+        self.mon={"mon1":max(0,randint(-3,2)),"mon2":max(0,randint(-1,3)),"mon3":randint(0,5),"mon4":randint(3,10),}
     def sw(self):
         if self.wpn[1]!="":
             return f"Weapon: {cap(self.wpn[1])}\n  BLK: {self.wpn[0]["blk"]}\n  ATK: {self.wpn[0]["atk"]}\n"
@@ -120,3 +121,38 @@ spls={
     "inner_stab":{"dmg":5,"eff":["dyi","wind"],"hel":0},
     "smack":{"dmg":3,"eff":["conc"],"hel":-1},
 }#"":{"dmg":,"eff":[],"hel":},
+def moner(tp,tp2,am):
+    con=1
+    #1=3x2
+    #2=4x3
+    #3=5x4
+    if tp=="1":
+        if tp2=="2":
+            con=3
+        elif tp2=="3":
+            con=3*4
+        elif tp2=="4":
+            con=3*4*5
+    elif tp=="2":
+        if tp2=="1":
+            con=1/3
+        elif tp2=="3":
+            con=4
+        elif tp2=="4":
+            con=4*5
+    elif tp=="3":
+        if tp2=="1":
+            con=1/(3*4)
+        elif tp2=="2":
+            con=1/(4)
+        elif tp2=="4":
+            con=5
+    elif tp=="4":
+        if tp2=="1":
+            con=1/(3*4*5)
+        elif tp=="2":
+            con=1/(4*5)
+        elif tp=="3":
+            con=1/5
+    return am-round(round(am*con)/con),round(am*con)
+# print(moner("2","1",10))
