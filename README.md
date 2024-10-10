@@ -1,6 +1,7 @@
 # Adventure.game
 asd  
-basically a game i making
+basically a game i making  
+ヱ αм мєннєя αт ¢σ∂ιηg ѕσσσ  
 
 to do
 * ~~make fightin sys better~~ ~~mostly~~ almost there

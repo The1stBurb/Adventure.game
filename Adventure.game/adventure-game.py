@@ -501,11 +501,11 @@ def upMp(d):
     return ["None","field","forest","river","moustain"][mp[p[1]][p[0]][0]]
 #my horse: 🐎
 
-# mp[0][0][1].append(shop())
+mp[0][0][1].append(shop())
 def action():
     # print(p[6])5
     if randint(0,5)==0:
-        fight()
+        # fight()
         pass
     tle=mp[p[0]][p[1]]
     bulds={"shp":True in[isinstance(i,shop) for i in mp[p[1]][p[0]][1]]}
@@ -523,7 +523,7 @@ def action():
     if len(p[3])==0:
         tprint("You"+eff[""])
     tprint("You are on a",["None","field","forest","river","moustain"][tle],"tile!")
-    inp=intput("You can:\n 1. Explore\n 2. Build\n 3. Eat\n 4. Rest\n 5. Look for resources\n 6. Open your backpack","\n 7. Shop"if bulds["shp"]==True else",sp=0.001)
+    inp=intput("You can:\n 1. Explore\n 2. Build\n 3. Eat\n 4. Rest\n 5. Look for resources\n 6. Open your backpack","\n 7. Shop"if bulds["shp"]==True else"",sp=0.001)
     print()
     match inp:
         case "1":
@@ -536,7 +536,8 @@ def action():
             b=randint(0,3)
             # print(b)
             if b==0:
-                fight()
+                # fight()
+                pass
         case "2":
             build()
             # b=input("Sorry but building isn't availible!",inp="Press enter to continue!")
@@ -590,6 +591,16 @@ def action():
                 bfix()
                 intput()
                 break
+        case "7":
+            if bulds["shp"]:
+                po=[a if isinstance(i,shop)else -1 for a,i in enumerate(mp[p[1]][p[0]][1])]
+                for i in po:
+                    if i!=-1:
+                        po=i
+                        break
+                mp[p[1]][p[0]][1][po].dor()
+            else:
+                tprint("There's no shop here!")
         case "stats":
             tprint("HP:",p[4],"\nEffects:",p[3])
             intput("press enter")
