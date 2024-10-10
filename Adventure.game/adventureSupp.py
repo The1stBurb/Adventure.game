@@ -167,4 +167,4 @@ def demon(mon):
     return ", ".join([str(m[i])+" "+i for i in m])
     # print(m)
 # print(demon((5*4*3)+(4*5)+(5)+(2)))
-print(moner("2","4",10))
+# print(moner("2","4",10))

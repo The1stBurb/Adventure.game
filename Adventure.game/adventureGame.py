@@ -3,11 +3,13 @@ from time import sleep,perf_counter
 from math import floor,ceil
 from adventureSupp import bads,bg,eff,p,wepon,effd,spls,demon
 from adventureText import tprint,intput,sm
+from adventureBuilds import sv
+mp=[[[randint(1,4),[]]]]
 def gt():
     # print(perf_counter_ns())
     return perf_counter()
-strt=gt()
 tme=[gt(),gt(),[4.25,0]]
+strt=gt()
 instaBuild=False
 def tmr():
     global tme
@@ -17,7 +19,6 @@ def tmr():
     #     cpt=cpt-17
     p[6]+=cpt*2
     tme=[round(tme[1]),round(ct),[(tme[2][0]+cpt)-(17 if tme[2][0]+cpt>17 else 0),tme[2][1]+(cpt/17)]]
-mp=[[[randint(1,4),[]]]]
 def adBi(itm):
     global mp,p
     mp[p[1]][p[0]][1].append()
@@ -613,6 +614,7 @@ def action():
 while True:
     print("\033c")
     # shop().dor()
-    # intput("")
-    action()
+    sv(p,mp,tme)
+    intput("")
+    # action()
     # fight()
