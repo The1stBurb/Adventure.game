@@ -1,7 +1,7 @@
 from random import choice,randint,random
 from time import sleep,perf_counter
 from math import floor,ceil
-from adventureSupp import bads,bg,eff,p,wepon,effd,spls
+from adventureSupp import bads,bg,eff,p,wepon,effd,spls,demon
 from adventureText import tprint,intput,sm
 def gt():
     # print(perf_counter_ns())
@@ -64,6 +64,7 @@ def bfix():
 mater={
     "nothing":["None"],
     "handbook":["read","equip"],
+    "book":["read","equip"],
 
     "grass":["eat","burn"],
     "hemp":["eat","burn"],
@@ -448,6 +449,28 @@ def hpr():
     else:
         fel="incredibly amazingly over-healthier"
     return fel
+#mon1=3x mon2
+#mon2=4x mon3
+#mon3=5x mon4
+shabl={"book":[5,10],"seed":[1,2],"apple":[2,5],"water":[0,1],"wood":[3,7],"rock":[2,5],"iron":[5,10],"coal":[3,10],"fire":[7,15],"pickaxe":[10,15],"axe":[10,15],"sword":[15,20],}#"":[,],
+class shop:
+    def __init__(self):
+        self.wpn="sword of"+choice([" fire"," water"," air"," earth"])
+        self.mon={"mon1":max(0,randint(-2,4)),"mon2":max(0,randint(-1,6)),"mon3":randint(3,10),"mon4":randint(5,15)}
+        self.wre=shabl.copy()
+        for i in range(randint(0,len(shabl)-3)):
+            self.wre=self.wre.pop(choice(self.wre),None)
+        for i in self.wre:
+            self.wre[i]=randint(self.wre[i][0],self.wre[i][1])
+    def __str__(self):
+        st=[]
+        for i in self.wre:
+            st.append(i+": "+demon(self.wre[i]))
+
+class house:
+    def __init__(self):
+        pass
+
 def action():
     # print(p[6])5
     if randint(0,5)==0:
