@@ -32,7 +32,7 @@ wepon={
     "doomstaff":{"blk":15,"atk":15,"desc":"bringer of doom","eff":["dyi","conc","conc","wind","unc","unc"],},
 }#"":{"blk":,"atk":,"desc":"","eff":[],},
 #L1->not really wepon,L2->basic wepon,L3->better wepon,L4->really good wepon,L5->mythic
-p=[0,0,[["Handbook",1],["seed",100]],{},100,1,0,{"helmet":["",0],"chestplate":["",0],"right_hand":["",0],"left_hand":["",0],"pants":["",0],"boots":["",0],},{"mon1":0,"mon2":0,"mon3":0,"mon4":0,}]
+p=[0,0,[["Handbook",1],["seed",100]],{},100,1,0,{"helmet":["",0],"chestplate":["",0],"right_hand":["",0],"left_hand":["",0],"pants":["",0],"boots":["",0],},{"mon1":0,"mon2":0,"mon3":0,"mon4":randint(5,10),}]
 #0-x map, 1-y map, 2-inv[name, amnt],3-effects,4-hp,5-atk,6-hunger,7-equiped
 eff={
     "":" have no effects!",
