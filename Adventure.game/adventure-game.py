@@ -18,33 +18,6 @@ def tmr():
     p[6]+=cpt*2
     tme=[round(tme[1]),round(ct),[(tme[2][0]+cpt)-(17 if tme[2][0]+cpt>17 else 0),tme[2][1]+(cpt/17)]]
 mp=[[[randint(1,4),[]]]]
-def upMp(d):
-    global mp,p
-    #types 0-none,1-field,2-forest,3-river,4-mount
-    if d==1:
-        p[1]-=1
-    elif d==2:
-        p[0]+=1
-    elif d==3:
-        p[1]+=1
-    elif d==4:
-        p[0]-=1
-    if p[0]<0:
-        for i in range(len(mp)):
-            mp[i].insert(0,[randint(1,4),[]])
-        p[0]=0
-    elif p[0]>len(mp[0])-1:
-        for i in range(len(mp)):
-            mp[i].append([randint(1,4),[]])
-        p[0]=len(mp[0])-1
-    elif p[1]<0:
-        mp.insert(0,[[randint(1,4),[]]for i in range(len(mp[0]))])
-        p[1]=0
-    elif p[1]>len(mp)-1:
-        mp.append([[randint(1,4),[]]for i in range(len(mp[0]))])
-        p[1]=len(mp)-1
-    return ["None","field","forest","river","moustain"][mp[p[1]][p[0]][0]]
-#my horse: 🐎
 def adBi(itm):
     global mp,p
     mp[p[1]][p[0]][1].append()
@@ -452,6 +425,11 @@ def hpr():
 #mon1=3x mon2
 #mon2=4x mon3
 #mon3=5x mon4
+def welth():
+    global p
+    tprint("Your monetary value:")
+    for i in ["mon4"]:
+        tprint(" ",str(p[8][i])+i)
 shabl={"book":[5,10],"seed":[1,2],"apple":[2,5],"water":[0,1],"wood":[3,7],"rock":[2,5],"iron":[5,10],"coal":[3,10],"fire":[7,15],"pickaxe":[10,15],"axe":[10,15],"sword":[15,20],}#"":[,],
 class shop:
     def __init__(self):
@@ -470,17 +448,68 @@ class shop:
         for i in self.wre:
             st.append(i+": "+str(self.wre[i])+"mon4")#+demon(self.wre[i]))
         return "Welcome to "+self.nm+"!\n  "+"\n  ".join(st)+"\n"
-
+    def pur(self,it):
+        if it in self.wre:
+            if self.wre[it]<=p[8]["mon4"]:
+                p[8]["mon4"]-=self.wre[it]
+                p[2].append([it,1])
+                bfix()
+                return"You bought a "+it+"!"
+            else:
+                return f"You need {self.wre[it]-p[8]["mon4"]}mon4!"
+        else:
+            return"That's not an item!"
+        # return"Purchase failed!"
+    def dor(self):
+        tprint(self)
+        welth()
+        p=intput("Would you like to buy anything?(y/n) ")
+        if p=="y":
+            tprint("\n"+self.pur(intput("What would you like to buy? ").lower()))
 class house:
     def __init__(self):
         pass
+def upMp(d):
+    global mp,p
+    #types 0-none,1-field,2-forest,3-river,4-mount
+    if d==1:
+        p[1]-=1
+    elif d==2:
+        p[0]+=1
+    elif d==3:
+        p[1]+=1
+    elif d==4:
+        p[0]-=1
+    if p[0]<0:
+        for i in range(len(mp)):
+            mp[i].insert(0,[randint(1,4),[]])
+            if randint(0,3)==0:
+                mp[i][0][1].append(shop())
+        p[0]=0
+    elif p[0]>len(mp[0])-1:
+        for i in range(len(mp)):
+            mp[i].append([randint(1,4),[]])
+            if randint(0,3)==0:
+                mp[i][-1][1].append(shop())
+        p[0]=len(mp[0])-1
+    elif p[1]<0:
+        mp.insert(0,[[randint(1,4),[shop()if randint(0,3)==0 else None]]for i in range(len(mp[0]))])
+        p[1]=0
+    elif p[1]>len(mp)-1:
+        mp.append([[randint(1,4),[shop()if randint(0,3)==0 else None]]for i in range(len(mp[0]))])
+        p[1]=len(mp)-1
+    return ["None","field","forest","river","moustain"][mp[p[1]][p[0]][0]]
+#my horse: 🐎
 
+# mp[0][0][1].append(shop())
 def action():
     # print(p[6])5
     if randint(0,5)==0:
         fight()
         pass
-    tle=mp[p[0]][p[1]][0]
+    tle=mp[p[0]][p[1]]
+    bulds={"shp":True in[isinstance(i,shop) for i in mp[p[1]][p[0]][1]]}
+    tle=tle[0]
     tmr()
     effd()
     # print(tme,"\n",round(tme[1]-strt))
@@ -494,7 +523,7 @@ def action():
     if len(p[3])==0:
         tprint("You"+eff[""])
     tprint("You are on a",["None","field","forest","river","moustain"][tle],"tile!")
-    inp=intput("You can:\n 1. Explore\n 2. Build\n 3. Eat\n 4. Rest\n 5. Look for resources\n 6. Open your backpack",sp=0.001)
+    inp=intput("You can:\n 1. Explore\n 2. Build\n 3. Eat\n 4. Rest\n 5. Look for resources\n 6. Open your backpack","\n 7. Shop"if bulds["shp"]==True else",sp=0.001)
     print()
     match inp:
         case "1":
@@ -528,9 +557,7 @@ def action():
                 p[2].append(i)
             bfix()
         case "6":
-            tprint("Your monetary value:")
-            for i in p[8]:
-                tprint(" ",str(p[8][i])+i)
+            welth()
             bbl={"none":0}
             for a,i in enumerate(p[2]):
                 tprint(str(i[1])+"x",i[0])
@@ -574,7 +601,7 @@ def action():
 # intput("You should find a handbook in your backpack!",sp=False,inp="Press enter to continue!")
 while True:
     print("\033c")
-    tprint(shop())
-    intput("")
-    # action()
+    # shop().dor()
+    # intput("")
+    action()
     # fight()

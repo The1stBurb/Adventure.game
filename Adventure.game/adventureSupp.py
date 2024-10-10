@@ -89,7 +89,7 @@ class bg:
             if wpn=="sword of":
                 wpn=wpn+choice([" fire"," water"," air"," earth"])
         self.nm,self.hp,self.atk,self.wpn=name,hp,atk,[wepon[wpn],wpn]if not isinstance(wpn,list)else wpn
-        self.mon={"mon1":max(0,randint(-3,2)),"mon2":max(0,randint(-1,3)),"mon3":randint(0,5),"mon4":randint(3,10),}
+        self.mon={"mon1":0,"mon2":0,"mon3":0,"mon4":randint(3,10),}#max(0,randint(-3,2)),max(0,randint(-1,3)),randint(0,5),0
     def sw(self):
         if self.wpn[1]!="":
             return f"Weapon: {cap(self.wpn[1])}\n  BLK: {self.wpn[0]["blk"]}\n  ATK: {self.wpn[0]["atk"]}\n"
