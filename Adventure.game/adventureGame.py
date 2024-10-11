@@ -514,7 +514,7 @@ def action():
         fight()
         pass
     tle=mp[p[0]][p[1]]
-    bulds={"shp":True in[i=="shop()" for i in mp[p[1]][p[0]][1]]}
+    bulds={"shp":True in[i=="shop()" for i in mp[p[1]][p[0]][1]],"hse":True in[i=="hse" for i in mp[p[1]][p[0]][1]],"fre":True in[i=="fire" for i in mp[p[1]][p[0]][1]]}
     tle=tle[0]
     tmr()
     effd()
@@ -529,7 +529,7 @@ def action():
     if len(p[3])==0:
         tprint("You"+eff[""])
     tprint("You are on a",["None","field","forest","river","moustain"][tle],"tile!")
-    inp=intput("You can:\n 0. Save a save or Load a save\n 1. Explore\n 2. Build\n 3. Eat\n 4. Rest\n 5. Look for resources\n 6. Open your backpack","\n 7. Shop"if bulds["shp"]==True else"",sp=0.001)
+    inp=intput("You can:\n 0. Save a save or Load a save\n 1. Explore\n 2. Build\n 3. Eat\n 4. Rest\n 5. Look for resources\n 6. Open your backpack","\n 7. Shop"if bulds["shp"]==True else"","\n 7. Enter a House"if bulds["hse"]==True else"",sp=0.001)
     print()
     match inp:
         case "0":
@@ -611,12 +611,13 @@ def action():
                 break
         case "7":
             if bulds["shp"]:
-                po=[a if isinstance(i,shop)else -1 for a,i in enumerate(mp[p[1]][p[0]][1])]
-                for i in po:
-                    if i!=-1:
-                        po=i
-                        break
-                mp[p[1]][p[0]][1][po].dor()
+                # po=[a if isinstance(i,"shop()")else -1 for a,i in enumerate(mp[p[1]][p[0]][1])]
+                # for i in po:
+                #     if i!=-1:
+                #         po=i
+                #         break
+                # mp[p[1]][p[0]][1][po].dor()
+                shop().dor()
             else:
                 tprint("There's no shop here!")
         case "stats":
