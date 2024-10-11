@@ -485,19 +485,19 @@ def upMp(d):
         for i in range(len(mp)):
             mp[i].insert(0,[randint(1,4),[]])
             if randint(0,3)==0:
-                mp[i][0][1].append(shop())
+                mp[i][0][1].append("shop()")
         p[0]=0
     elif p[0]>len(mp[0])-1:
         for i in range(len(mp)):
             mp[i].append([randint(1,4),[]])
             if randint(0,3)==0:
-                mp[i][-1][1].append(shop())
+                mp[i][-1][1].append("shop()")
         p[0]=len(mp[0])-1
     elif p[1]<0:
-        mp.insert(0,[[randint(1,4),[shop()if randint(0,3)==0 else None]]for i in range(len(mp[0]))])
+        mp.insert(0,[[randint(1,4),["shop()"if randint(0,3)==0 else None]]for i in range(len(mp[0]))])
         p[1]=0
     elif p[1]>len(mp)-1:
-        mp.append([[randint(1,4),[shop()if randint(0,3)==0 else None]]for i in range(len(mp[0]))])
+        mp.append([[randint(1,4),["shop()"if randint(0,3)==0 else None]]for i in range(len(mp[0]))])
         p[1]=len(mp)-1
     return ["None","field","forest","river","moustain"][mp[p[1]][p[0]][0]]
 #my horse: 🐎
@@ -506,15 +506,15 @@ def gs(b):
     p=b[0].copy()
     tme=b[1].copy()
     mp=b[2].copy()
-    print(mp)
-mp[0][0][1].append(shop())
+    # print(mp)
+mp[0][0][1].append("shop()")
 def action():
     # print(p[6])5
     if randint(0,5)==0:
         fight()
         pass
     tle=mp[p[0]][p[1]]
-    bulds={"shp":True in[isinstance(i,shop) for i in mp[p[1]][p[0]][1]]}
+    bulds={"shp":True in[i=="shop()" for i in mp[p[1]][p[0]][1]]}
     tle=tle[0]
     tmr()
     effd()
@@ -536,7 +536,7 @@ def action():
             print("Just so you know! Map does NOT save the structures!")
             dor=intput("Would you like to save or load?(s/l) ")
             if dor=="s":
-                sv(p,tme,[[[j[0],[]] for j in i]for i in mp])
+                sv(p,tme,mp)#[[[j[0],[]] for j in i]for i in mp])
                 intput("Press enter to continue!")
             elif dor=="l":
                 b=intput("What's your savecode? ")
