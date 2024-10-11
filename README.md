@@ -13,7 +13,7 @@ to do
 * ~~spelling~~
 * ~~effects actuall effect `you`~~
 * ~~MONEY~~
-* and so a shop system
+* ~~and so a shop system~~
 * LOTS more this is still really a WIP.py project
 
 has:
