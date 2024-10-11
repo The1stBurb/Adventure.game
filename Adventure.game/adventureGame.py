@@ -529,7 +529,7 @@ def action():
     if len(p[3])==0:
         tprint("You"+eff[""])
     tprint("You are on a",["None","field","forest","river","moustain"][tle],"tile!")
-    inp=intput("You can:\n 0. Save a save or Load a save\n 1. Explore\n 2. Build\n 3. Eat\n 4. Rest\n 5. Look for resources\n 6. Open your backpack","\n 7. Shop"if bulds["shp"]==True else"","\n 7. Enter a House"if bulds["hse"]==True else"",sp=0.001)
+    inp=intput("You can:\n 0. Save a save or Load a save\n 1. Explore\n 2. Build\n 3. Eat\n 4. Rest\n 5. Look for resources\n 6. Open your backpack","\n 7. Enter a Shop"if bulds["shp"]==True else"","\n 8. Enter a House"if bulds["hse"]==True else"",sp=0.001)
     print()
     match inp:
         case "0":
@@ -620,6 +620,11 @@ def action():
                 shop().dor()
             else:
                 tprint("There's no shop here!")
+        case "8":
+            if bulds["hse"]:
+                intput("You enter the house. You don't see anything inside and leave.\nPress enter to continue.")
+            else:
+                tprint("There's no house here!")
         case "stats":
             tprint("HP:",p[4],"\nEffects:",p[3])
             intput("press enter")
