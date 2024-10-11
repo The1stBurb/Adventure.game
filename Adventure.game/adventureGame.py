@@ -531,13 +531,14 @@ def action():
             dor=intput("Would you like to save or load?(s/l) ")
             if dor=="s":
                 sv(p,tme)
+                intput("Press enter to continue!")
             elif dor=="l":
                 b=intput("What's your savecode? ")
                 b=unsv(b)
-                p=b[0].copy()
-                tme=b[1].copy()
+                # p=b[0].copy()
+                # tme=b[1].copy()
             else:
-                tprint("Not poosible!")
+                tprint("Not posible!")
         case "1":
             inp=intput("What direction? 1-Up, 2-Right, 3-Down, 4-Left")
             if inp.isdigit()and int(inp)in range(1,5):
@@ -623,7 +624,7 @@ def action():
 # tprint("PS. if you are in trouble we won't rescue you!",sp=10**-15)
 # intput("You should find a handbook in your backpack!",sp=False,inp="Press enter to continue!")
 while True:
-    print("\033c")
+    # print("\033c")
     # shop().dor()
     action()
     # fight()
