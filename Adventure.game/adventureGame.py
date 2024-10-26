@@ -737,7 +737,7 @@ def action():
         dor=intput("Would you like to save or load?(s/l) ")
         if dor=="s":
             code=sv(p,tme,mp)#[[[j[0],[]] for j in i]for i in mp])
-            with open("savbd.txt","w")as stx:
+            with open("save.txt","w")as stx:
                 stx.write(code)
             intput("Press enter to continue!")
         elif dor=="l":
