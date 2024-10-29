@@ -193,7 +193,9 @@ def build():
     crft2={}
     for a,i in enumerate(craft):
         c=craft[i]
+        # craft2[i]=[]
         buld=True
+        # bld[i]=[]
         print(str(a+1)+".",i+":")
         for j in range(len(c)-1):
             k=c[j]
@@ -207,6 +209,7 @@ def build():
             elif nal:
                 for l in range(len(k[0])):
                     mx.append(str(k[1])+"x "+k[0][l])
+                    # bld[i].append([k[0][l],k[1]])
             print("    ",(" or ".join(mx)if nal else str(k[1])+"x "+k[0]))
             # print("  ",str(c[j][1])+"x",(" or ".join(c[j][0])if isinstance(c[j][0],list)else c[j][0]))
     while True:
@@ -218,6 +221,8 @@ def build():
         else:
             break
     rsc=craft[bld][:-1]
+    # print(rsc)
+    # mx={}
     gd=False
     if instaBuild==False:
         for i in rsc:
@@ -237,16 +242,19 @@ def build():
                             break
                 else:
                     for l in range(len(i[0])):
+                        # print(i[0][l],i[1],bbl[i[0][l]][0])
                         if i[0][l]in bbl and bbl[i[0][l]][0]>=i[1]:
                             gd=[i[0][l],i[1]]
                             break
             else:
                 if i[0]in bbl and bbl[i[0]][0]>=i[1]:
                     gd=[i[0],i[1]]
+            # print(gd)
             if gd==False:
                 break
     else:
         gd=True
+    # print(p[2],bbl)
     if gd!=False:
         if instaBuild==False:
             p[2][bbl[gd[0]][1]][1]-=gd[1]
@@ -254,9 +262,10 @@ def build():
             p[2].append([bld,1])
         else:
             mp[p[1]][p[0]][1].append(bld.lower())
+    # print(p[2])
     bfix()
     print("You built a",bld+".\n")
-    intput("Press enter to continue!")
+    intput("Press enter to continue!")#,p[2],mp[p[1]][p[0]]
     # quit()
 books={
     "handbook":["Hey! This is a generic handbook to help you! It's full of really helpful stuff, like the windlife on unrelated planets!","You could encounter a variety of creatures! They could be boggins, Truls, Rocks, dogs, cats, elemental sprites, and more!\nWe don't think this world has advanced to complicated weapons, but you will probally encounter stone tools!","There does seem to be a monetary system here, so we gave you a few coins. Also, we have detected faint traces of scriptum and shardium so watch out for celestial forms!\n\nWe will check on you in a bit to see if you have died! Good luck!"],
@@ -413,6 +422,7 @@ def fight():
                     bd.hp-=at
                 elif i=="2":
                     dd=randint(20,50)
+                    # dd=ceil(dd/randint(1,2))
                     tprint("You gain",str(dd)+"% dodge!")
                     p[12]+=dd
                 elif i=="3":
@@ -614,6 +624,9 @@ class shop:
     def __init__(self):
         self.wpn="sword of"+choice([" fire"," water"," air"," earth"])
         self.mon={"mon1":max(0,randint(-2,4)),"mon2":max(0,randint(-1,6)),"mon3":randint(3,10),"mon4":randint(5,15)}
+        # self.wre=shabl.copy()
+        # for i in range(randint(0,len(shabl)-3)):
+        #     self.wre=self.wrbd.pop(choice(self.wre),None)
         selected_keys = sample(list(shabl.keys()), randint(3,len(shabl)-1))
         self.wre = {key: shabl[key] for key in selected_keys}
         for i in self.wre:
@@ -635,6 +648,7 @@ class shop:
                 return "You need "+str(self.wre[it]-p[8]["mon4"])+"mon4!"
         else:
             return"That's not an item!"
+        # return"Purchase failed!"
     def dor(self):
         tprint(self)
         welth()
@@ -683,12 +697,14 @@ def gs(b):
     p=b[0].copy()
     tme=b[1].copy()
     mp=b[2].copy()
+    # print(mp)
 # mp[0][0][1].append("shop()")
 # mp[0][0][1].append("house")
 # mp[0][0][1].append("firepit")
 
 #main action sys
 def action():
+    # print(p[6])10
     if randint(0,10)==0:
         fight()
         pass
@@ -697,6 +713,7 @@ def action():
     tle=tle[0]
     tmr()
     effd()
+    # print(tme,"\n",round(tme[1]-strt))
     vrb=str(floor(tme[2][0]*100))
     tprint("Its the",sm(floor(tme[2][1]+1)),"day. It's",("0"*(4-len(vrb)))+vrb,"o'clock.")
     tprint("You feel",hpr()+",",dcyc(),"and",hgr()+".")
@@ -720,7 +737,7 @@ def action():
         dor=intput("Would you like to save or load?(s/l) ")
         if dor=="s":
             code=sv(p,tme,mp)#[[[j[0],[]] for j in i]for i in mp])
-            with open("save.txt","w")as stx:
+            with open("savbd.txt","w")as stx:
                 stx.write(code)
             intput("Press enter to continue!")
         elif dor=="l":
@@ -733,18 +750,23 @@ def action():
         inp=intput("What direction? 1-Up, 2-Right, 3-Down, 4-Left")
         if inp.isdigit()and int(inp)in range(1,5):
             tprint("You find a:",upMp(int(inp)),"tile!")
+            # print(mp)
         else:
             tprint("Can't go that direction!")
         b=randint(0,5)
         intput("Press enter to continue!")
+        # print(b)
         if b==0:
             print("\033c")
             fight()
             pass
     elif inp=="2":
         build()
+        # b=input("Sorry but building isn't availible!",inp="Press enter to continue!")
+        # continue
     elif inp=="3":
         eat()
+        # b=intput("Sorry but eating isn't availible!",inp="Press enter to continue!")
     elif inp=="4":
         tprint("You decide the nearest spot of ground looks comfy!")
         for i in ["z","Z","z","z","Z"]:
