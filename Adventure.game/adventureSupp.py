@@ -51,7 +51,7 @@ wepon={
 }#"":{"blk":,"atk":,"desc":"","eff":[],},
 #L1->not really wepon,L2->basic wepon,L3->better wepon,L4->really good wepon,L5->mythic
 #you
-p=[0,0,[["Handbook",1],["tomer",5]],{"unc":0},100,1,0,{"helmet":["",0],"chestplate":["",0],"right_hand":["",0],"left_hand":["",0],"pants":["",0],"boots":["",0],},{"mon1":0,"mon2":0,"mon3":0,"mon4":randint(5,10),},[0,0],
+old_p=[0,0,[["Handbook",1],["tomer",5]],{"unc":0},100,1,0,{"helmet":["",0],"chestplate":["",0],"right_hand":["",0],"left_hand":["",0],"pants":["",0],"boots":["",0],},{"mon1":0,"mon2":0,"mon3":0,"mon4":randint(5,10),},[0,0],
 {"knwn":{},"lkd":{
     "fireball":{"dmg":5,"eff":["fire"],"hel":0,"lv":5,"xpc":0},
     "heal":{"dmg":1,"eff":[],"hel":5,"lv":6,"xpc":1},
@@ -70,6 +70,40 @@ p=[0,0,[["Handbook",1],["tomer",5]],{"unc":0},100,1,0,{"helmet":["",0],"chestpla
 },#spells
 0,0]
 #0-x map, 1-y map, 2-inv[name, amnt],3-effects,4-hp,5-atk,6-hunger,7-equiped,8-mon,9-xp,10-spells,11-movability,12-dodge amount
+class plr:
+    def __init__(self):
+        self.x=0
+        self.y=0
+        self.inv=[["Handbook",1]]
+        self.eff={"unc":0}
+        self.hp=100
+        self.atk=1
+        self.hg=0
+        self.eq={"helmet":["",0],"chestplate":["",0],"right_hand":["",0],"left_hand":["",0],"pants":["",0],"boots":["",0],}
+        self.mon={"mon1":0,"mon2":0,"mon3":0,"mon4":randint(5,10),}
+        self.xp=0
+        self.lvl=0
+        self.spl={
+            "knwn":{},
+            "lkd":{
+                "fireball":{"dmg":5,"eff":["fire"],"hel":0,"lv":5,"xpc":0},
+                "heal":{"dmg":1,"eff":[],"hel":5,"lv":6,"xpc":1},
+                "trippy":{"dmg":2,"eff":["fall","haluc","wind"],"hel":0.01,"lv":10,"xpc":2},
+                "nerd":{"dmg":3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651,"eff":["haluc"],"hel":-1,"lv":8,"xpc":0.5},
+                "inner_stab":{"dmg":7,"eff":["dyi","wind"],"hel":0,"lv":10,"xpc":3},
+                "smack":{"dmg":2,"eff":["conc"],"hel":-1,"lv":9,"xpc":0},
+                "poison":{"dmg":2,"hel":0,"eff":["pois"],"lv":12,"xpc":5},
+                "freeze":{"dmg":3,"hel":-0.1,"eff":["slw"],"lv":6,"xpc":0},
+                "resist":{"dmg":1,"hel":5,"eff":[],"lv":15,"xpc":10},#"res" for i in range(5)
+                "finagle":{"dmg":1,"hel":2,"eff":["codep[8][\"mon4\"]+=randint(2,4)"],"lv":10,"xpc":5},
+                "tp":{"dmg":0,"hel":-5,"eff":["codep[0]=randint(0,len(mp)\np[1]=randint(0,len(mp[0])\nfg=False"],"lv":100,"xpc":10**10},
+                # "":{"dmg":,"hel":,"eff":[],"lv":,"xpc":0},
+                # "":{"dmg":,"hel":,"eff":[],"lv":,"xpc":0},
+            }
+        },#spells
+        self.mv=0
+        self.dg=0
+p=plr()
 #textify your effects
 eff={
     "":" have no effects!",
@@ -89,53 +123,53 @@ eff={
 #run effects
 def effd():
     global p
-    for i in p[3]:
+    for i in p.eff:
         # print(i)
-        if p[3][i]>0:
+        if p.eff[i]>0:
             if i in ["hyd","unc","fell","dyi"]:
-                p[3][i]-=1
+                p.eff[i]-=1
             elif randint(0,2)==0 and not i in ["conc"]:
-                p[3][i]-=1
+                p.eff[i]-=1
             # if randint(0,1)==0:
             if i=="hyd":
-                p[6]+=0.1
-                if p[3]["fire"]>0 and randint(0,2)==0:
-                    p[3]["fire"]-=1
-                # p[3][i]-=1
+                p.hg+=0.1
+                if p.eff["fire"]>0 and randint(0,2)==0:
+                    p.eff["fire"]-=1
+                # p.eff[i]-=1
             elif i=="fire":
-                p[4]-=4
+                p.hp-=4
             elif i=="pois":
-                p[4]-=2
+                p.hp-=2
             elif i=="haluc":
-                p[4]+=randint(-1,1)/10
-                p[6]+=randint(-1,1)/10
+                p.hp+=randint(-1,1)/10
+                p.hg+=randint(-1,1)/10
                 if randint(0,2)==0:
-                    p[11]+=1
+                    p.mv+=1
             if i=="unc":
                 s=randint(5,10)
                 # for i in range(s):
                 #     print(f"You will be unconcious for {s-i} more seconds!")
                 #     sleep(1)
-                p[11]+=s
+                p.mv+=s
             elif i=="conc":
-                p[11]+=raandint(0,2)
+                p.mv+=raandint(0,2)
                 if randint(0,2)==0:
-                    p[3][i]-=1
+                    p.eff[i]-=1
                     if randint(0,5)!=0:
-                        p[3][choice(["haluc","unc"])]+=1
+                        p.eff[choice(["haluc","unc"])]+=1
                     
             elif i=="fell":
-                p[6]-=5
-                p[9][0]-=min(p[9][0],5)+randint(-1,2)
+                p.hg-=5
+                p.xp-=min(p.xp,5)+randint(-1,2)
                 s=randint(2,5)
                 # for i in range(s):
                 #     print(f"Your getting up from your fall! You will be up in {s-i} seconds!")
                 #     sleep(1)
-                p[11]+=s
+                p.mv+=s
             elif i=="dyi":
-                p[4]-=(p[4]+10)/2
-        p[6]=min(13,max(0,p[6]))
-        p[4]=max(1,p[4])
+                p.hp-=(p.hp+10)/2
+        p.hg=min(13,max(0,p.hg))
+        p.hp=max(1,p.hp)
 #capitoloze
 def cap(txt):
     return txt[0].upper()+txt[1:]
