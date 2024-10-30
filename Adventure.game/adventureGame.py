@@ -7,7 +7,7 @@ from adventureBuilds import sv,unsv
 import mod#bads,wepon,spells,effs,craft,mater,books,eatr,shabl
 bads+=[bg(i[0],i[1],i[2],i[3],i[4])for i in mod.bads]
 wepon={**wepon,**mod.wepon}
-p[10]["lkd"]={**p[10]["lkd"],**mod.spells}
+# p.spl["lkd"]={**p.spl["lkd"],**mod.spells}
 eff={**eff,**mod.effs}
 mp=[[[randint(1,4),[]]]]
 s="#"#"□"\
@@ -19,27 +19,27 @@ def cxp(nl=0):
     global p
     pi=3.14
     if nl==1:
-        return (50/pi)+((p[9][1]*pi**(pi-2)))/pi
+        return (50/pi)+((p.lvl*pi**(pi-2)))/pi
     while True:
-        nl=(50/pi)+((p[9][1]*pi**(pi-2)))/pi
-        if p[9][0]>=nl:
-            p[9][0]=round(p[9][0]-nl)
-            p[9][1]+=1
-            hpg=pi*pi+(p[9][1]*pi**(pi-randint(2,3)))
-            p[4]+=hpg
-            atg=pi+p[9][1]*pi**(pi-randint(2,3))
-            p[5]+=atg
-            tprint("You're level",str(p[9][1])+"!")
+        nl=(50/pi)+((p.lvl*pi**(pi-2)))/pi
+        if p.xp>=nl:
+            p.xp=round(p.xp-nl)
+            p.lvl+=1
+            hpg=pi*pi+(p.lvl*pi**(pi-randint(2,3)))
+            p.hp+=hpg
+            atg=pi+p.lvl*pi**(pi-randint(2,3))
+            p.atk+=atg
+            tprint("You're level",str(p.lvl)+"!")
             tprint("You gain",round(hpg),"HP, and",round(atg),"ATK!")
             sc=[]
-            for i in p[10]["lkd"]:
-                if p[9][1]>=p[10]["lkd"][i]["lv"]:
-                    z=p[10]["lkd"][i]
-                    p[10]["knwn"][i]={"dmg":z["dmg"],"hel":z["hel"],"eff":z["eff"],"xpc":z["xpc"]},
+            for i in p.spl["lkd"]:
+                if p.lvl>=p.spl["lkd"][i]["lv"]:
+                    z=p.spl["lkd"][i]
+                    p.spl["knwn"][i]={"dmg":z["dmg"],"hel":z["hel"],"eff":z["eff"],"xpc":z["xpc"]},
                     tprint("You learn the spell",i+"!")
                     sc.append(i)
             for i in sc:
-                del p[10]["lkd"][i]
+                del p.spl["lkd"][i]
         else:
             intput("Press enter to continue!")
             break
@@ -59,25 +59,25 @@ def tmr():
     cpt=((ct-pt)/6)/17
     # if cpt>17:
     #     cpt=cpt-17
-    p[6]+=cpt*2
+    p.hg+=cpt*2
     tme=[round(tme[1]),round(ct),[(tme[2][0]+cpt)-(17 if tme[2][0]+cpt>17 else 0),tme[2][1]+(cpt/17)]]
 def adBi(itm):
     global mp,p
-    mp[p[1]][p[0]][1].append()
+    mp[p.y][p.x][1].append()
 #fixes yr inv so no dupes or 0x item
 def bfix():
     global p
     inv={}
-    for i in p[2]:
+    for i in p.inv:
         # print(i)
         if i[0] in inv:
             inv[i[0]]+=i[1]
         else:
             inv[i[0]]=i[1]
-    p[2]=[]
+    p.inv=[]
     for i in inv:
         if inv[i]>0 and i!="none" and i!="":
-            p[2].append([i,inv[i]])
+            p.inv.append([i,inv[i]])
 #what u can so with items
 mater={
     "nothing":["None"],
@@ -184,7 +184,7 @@ def build():
     global craft,mater,p
     tprint("You have:")
     bbl={}
-    for a,i in enumerate(p[2]):
+    for a,i in enumerate(p.inv):
         if "build" in mater[i[0].lower()]:
             print("  ",str(i[1])+"x",i[0])
             bbl[i[0].lower()]=[i[1],a]
@@ -254,18 +254,18 @@ def build():
                 break
     else:
         gd=True
-    # print(p[2],bbl)
+    # print(p.inv,bbl)
     if gd!=False:
         if instaBuild==False:
-            p[2][bbl[gd[0]][1]][1]-=gd[1]
+            p.inv[bbl[gd[0]][1]][1]-=gd[1]
         if bld.lower()in mater and"equip"in mater[bld.lower()]:
-            p[2].append([bld,1])
+            p.inv.append([bld,1])
         else:
-            mp[p[1]][p[0]][1].append(bld.lower())
-    # print(p[2])
+            mp[p.y][p.x][1].append(bld.lower())
+    # print(p.inv)
     bfix()
     print("You built a",bld+".\n")
-    intput("Press enter to continue!")#,p[2],mp[p[1]][p[0]]
+    intput("Press enter to continue!")#,p.inv,mp[p.y][p.x]
     # quit()
 books={
     "handbook":["Hey! This is a generic handbook to help you! It's full of really helpful stuff, like the windlife on unrelated planets!","You could encounter a variety of creatures! They could be boggins, Truls, Rocks, dogs, cats, elemental sprites, and more!\nWe don't think this world has advanced to complicated weapons, but you will probally encounter stone tools!","There does seem to be a monetary system here, so we gave you a few coins. Also, we have detected faint traces of scriptum and shardium so watch out for celestial forms!\n\nWe will check on you in a bit to see if you have died! Good luck!"],
@@ -275,7 +275,7 @@ def readr():
     global p
     bks={}
     print("You can read:")
-    for i in p[2]:
+    for i in p.inv:
         # print(i,i[0].lower()in mater,"read"in mater[i[0].lower()])
         if i[0].lower() in mater and "read"in mater[i[0].lower()]:
             print(i[0])
@@ -313,7 +313,7 @@ def eat():
     global p,mater
     tprint("You can eat:")
     bbl={}
-    for a,i in enumerate(p[2]):
+    for a,i in enumerate(p.inv):
         if "eat" in mater[i[0].lower()]:
             print("  ",str(i[1])+"x",i[0])
             bbl[i[0].lower()]=[i[1],a]
@@ -334,37 +334,37 @@ def eat():
     amn=min(1000,amn)
     hpp=eatr[wh.lower()]
     eff=[""]
-    if len(hpp[1])>0:
+    if len(hpp.y)>0:
         for i in range(amn):
             if randint(0,4)==0:
                 continue
-            cho=choice(hpp[1])
+            cho=choice(hpp.y)
             eff.append(cho)
-            if cho in p[3]:
-                p[3][cho]+=1
+            if cho in p.eff:
+                p.eff[cho]+=1
             else:
-                p[3][cho]=1
-    hpp=max(50,hpp[0]*amn)
+                p.eff[cho]=1
+    hpp=max(50,hpp.x*amn)
     hpp+=randint(-floor(hpp/5),ceil(hpp/5))
-    p[2][bbl[wh.lower()][1]][1]-=amn
-    p[4]+=hpp
+    p.inv[bbl[wh.lower()][1]][1]-=amn
+    p.hp+=hpp
     tprint("You eat the",wh,"and it gives you",hpp,"HP points!","\nYou get the effect: "+eff[-1] if eff[-1]!="" else"")
     bfix()
 #textifys your hunger
 def hgr():
     global p
     txt="dead from starving"
-    if p[6]>=0 and p[6]<2:
+    if p.hg>=0 and p.hg<2:
         txt="full"
-    elif p[6]>=2 and p[6]<5:
+    elif p.hg>=2 and p.hg<5:
         txt="slightly hungry"
-    elif p[6]>=5 and p[6]<9:
+    elif p.hg>=5 and p.hg<9:
         txt="hungry"
-    elif p[6]>=9 and p[6]<12:
+    elif p.hg>=9 and p.hg<12:
         txt="really hungry"
-    elif p[6]>=12 and p[6]<13:
+    elif p.hg>=12 and p.hg<13:
         txt="starving"
-    elif p[6]>=13 and p[6]<15:
+    elif p.hg>=13 and p.hg<15:
         txt="really starving"
     else:
         print("\033cYou died from starvation.")
@@ -392,16 +392,16 @@ def fight():
     while fg:
         effd()
         print("\033c")
-        pa=wepon[p[7]["helmet"][0]]["atk"]+wepon[p[7]["chestplate"][0]]["atk"]+wepon[p[7]["left_hand"][0]]["atk"]+wepon[p[7]["right_hand"][0]]["atk"]+wepon[p[7]["pants"][0]]["atk"]+wepon[p[7]["boots"][0]]["atk"]
-        pb=wepon[p[7]["helmet"][0]]["blk"]+wepon[p[7]["chestplate"][0]]["blk"]+wepon[p[7]["left_hand"][0]]["blk"]+wepon[p[7]["right_hand"][0]]["blk"]+wepon[p[7]["pants"][0]]["blk"]+wepon[p[7]["boots"][0]]["blk"]
+        pa=wepon[p.eq["helmet"][0]]["atk"]+wepon[p.eq["chestplate"][0]]["atk"]+wepon[p.eq["left_hand"][0]]["atk"]+wepon[p.eq["right_hand"][0]]["atk"]+wepon[p.eq["pants"][0]]["atk"]+wepon[p.eq["boots"][0]]["atk"]
+        pb=wepon[p.eq["helmet"][0]]["blk"]+wepon[p.eq["chestplate"][0]]["blk"]+wepon[p.eq["left_hand"][0]]["blk"]+wepon[p.eq["right_hand"][0]]["blk"]+wepon[p.eq["pants"][0]]["blk"]+wepon[p.eq["boots"][0]]["blk"]
         if t==1:
             tprint("It's your turn!")
-            # mpp=floor(mapp(p[4],0,p.mhp,0,10))
-            tprint("HP:",p[4])#"|"+((ou+s)*mpp)+((ou+" ")*(10-mpp))+"|")#w□wou+
-            tprint("ATK:",p[5],"\nBLK:",0)
+            # mpp=floor(mapp(p.hp,0,p.mhp,0,10))
+            tprint("HP:",p.hp)#"|"+((ou+s)*mpp)+((ou+" ")*(10-mpp))+"|")#w□wou+
+            tprint("ATK:",p.atk,"\nBLK:",0)
             tprint("ATK bonus:",pa,"\nBLK bonus:",pb)
-            if p[11]>0:
-                p[11]-=1
+            if p.mv>0:
+                p.mv-=1
                 intput("For various reasons you can't move!\nPress enter to continue!")
                 # sleep(1)
                 t*=-1
@@ -413,7 +413,7 @@ def fight():
             dor=[dor[0],dor[1]]
             for i in dor:
                 if i=="1":
-                    at=atr(p[5]+pa)
+                    at=atr(p.atk+pa)
                     tprint("You attack for",at,"damage!")
                     bl=atr(bd.blk+bd.wpn[0]["blk"])
                     tprint("The enemy blocks",bl,"damage!")
@@ -424,25 +424,25 @@ def fight():
                     dd=randint(20,50)
                     # dd=ceil(dd/randint(1,2))
                     tprint("You gain",str(dd)+"% dodge!")
-                    p[12]+=dd
+                    p.dg+=dd
                 elif i=="3":
                     tprint("nopers")
-                elif i=="4"and len(p[10]["knwn"])>0:
+                elif i=="4"and len(p.spl["knwn"])>0:
                     tprint("You have",p[9],"XP!")
-                    for i in p[10]["knwn"]:
-                        tprint(i,"DMG:",str(p[10]["knwn"][i]["dmg"])+", Heal:",str(p[10]["knwn"][i]["hel"])+", XP cost:",p[10]["knwn"][i]["xpc"])
+                    for i in p.spl["knwn"]:
+                        tprint(i,"DMG:",str(p.spl["knwn"][i]["dmg"])+", Heal:",str(p.spl["knwn"][i]["hel"])+", XP cost:",p.spl["knwn"][i]["xpc"])
                     sp=intput("What would you like to spell? ")
-                    if sp in p[10]["knwn"]:
-                        if p[9]>=p[10]["knwn"]["xpc"]:
-                            dm=max(0,p[10]["knwn"][sp]["dmg"]-(bd.wpn[0]["blk"]/2))
+                    if sp in p.spl["knwn"]:
+                        if p[9]>=p.spl["knwn"]["xpc"]:
+                            dm=max(0,p.spl["knwn"][sp]["dmg"]-(bd.wpn[0]["blk"]/2))
                             dm+=randint(min(-1,-floor(dm/5)),max(1,ceil(dm/5)))
                             tprint("You attack for",dm,"damage!")
                             bd.hp-=dm
-                            dm=p[10]["knwn"][sp]["hel"]
+                            dm=p.spl["knwn"][sp]["hel"]
                             dm+=randint(min(-1,-floor(dm/5)),max(1,ceil(dm/5)))
                             tprint("You heal for",max(0,dm),"HP!")
-                            p[4]+=max(0,dm)
-                            p[9]-=p[10]["knwn"]["xpc"]
+                            p.hp+=max(0,dm)
+                            p[9]-=p.spl["knwn"]["xpc"]
                         else:
                             tprint("You don't have enough XP!")
                             continue
@@ -464,45 +464,45 @@ def fight():
             tprint("It attacks for",at,"damage!")
             bl=atr(0+pb)
             tprint("You block",bl,"damage!")
-            tprint("You dodge",str(p[12])+"% damage!")
-            at=floor(max(0,(at-bl)*(1-(p[12]/100))))
-            p[12]=0
+            tprint("You dodge",str(p.dg)+"% damage!")
+            at=floor(max(0,(at-bl)*(1-(p.dg/100))))
+            p.dg=0
             tprint("\nFinal damage:",at)
-            p[4]-=at
+            p.hp-=at
             efr=choice(wepon[bd.wpn[1]]["eff"]+[""])
             if efr!="":
                 tprint("You"+eff[efr])
-                if efr in p[3]:
-                    p[3][efr]+=1
+                if efr in p.eff:
+                    p.eff[efr]+=1
                 else:
-                    p[3][efr]=1
+                    p.eff[efr]=1
         intput("Press enter to continue!")
-        if bd.hp<=0 or p[4]<=0:
+        if bd.hp<=0 or p.hp<=0:
             fg=False
             continue
         t*=-1
-    if p[4]<=0:
+    if p.hp<=0:
         tprint("\033cYou died!")
         quit()
     elif bd.hp<=0:
         tprint("\n\n\nYou won!")
-        hpp=randint(10,50 if p[4]>50 else 100)
+        hpp=randint(10,50 if p.hp>50 else 100)
         atp=randint(0,2)
         tprint("You gain",hpp,"HP!")
         tprint("You gain",atp,"ATK!")
-        p[4]+=hpp
-        p[5]+=atp
+        p.hp+=hpp
+        p.atk+=atp
         wnI=bd.wpn if randint(0,2)==0 else [{"hp":0},""]
         if wnI[1]!="":
             tprint("You win a",wnI[1]+"!")
-            p[2].append([wnI[1],1])
+            p.inv.append([wnI[1],1])
         tprint("It had:")
         for i in ["mon4"]:#bd.mon:
             tprint(" ",bd.mon[i],i)
-            p[8][i]+=bd.mon[i]
+            p.mon[i]+=bd.mon[i]
         xpg=randint(10,20)
         tprint("You gain",xpg,"XP!")
-        p[9][0]+=xpg
+        p.xp+=xpg
     intput("Press enter to continue!")
     cxp()
     print("\033c")
@@ -571,39 +571,39 @@ def dcyc():
 def hpr():
     global p
     fel="dead"
-    if p[4]>0 and p[4]<=5:
+    if p.hp>0 and p.hp<=5:
         fel="really terrible"
-    elif p[4]>5 and p[4]<=10:
+    elif p.hp>5 and p.hp<=10:
         fel="terrible"
-    elif p[4]>10 and p[4]<=15:
+    elif p.hp>10 and p.hp<=15:
         fel="vary bad"
-    elif p[4]>15 and p[4]<=20:
+    elif p.hp>15 and p.hp<=20:
         fel="really bad"
-    elif p[4]>50 and p[4]<=50:
+    elif p.hp>50 and p.hp<=50:
         fel="bad" 
-    elif p[4]>50 and p[4]<=80:
+    elif p.hp>50 and p.hp<=80:
         fel="okay"
-    elif p[4]>80 and p[4]<=110:
+    elif p.hp>80 and p.hp<=110:
         fel="really okay"
-    elif p[4]>110 and p[4]<=200:
+    elif p.hp>110 and p.hp<=200:
         fel="good"
-    elif p[4]>200 and p[4]<=240:
+    elif p.hp>200 and p.hp<=240:
         fel="really good"
-    elif p[4]>240 and p[4]<=300:
+    elif p.hp>240 and p.hp<=300:
         fel="very good"
-    elif p[4]>370 and p[4]<=370:
+    elif p.hp>370 and p.hp<=370:
         fel="wonderful"
-    elif p[4]>420 and p[4]<=420:
+    elif p.hp>420 and p.hp<=420:
         fel="very wonderful"
-    elif p[4]>500 and p[4]<=500:
+    elif p.hp>500 and p.hp<=500:
         fel="really wonderful"
-    elif p[4]>580 and p[4]<=580:
+    elif p.hp>580 and p.hp<=580:
         fel="amazing"
-    elif p[4]>660 and p[4]<=660:
+    elif p.hp>660 and p.hp<=660:
         fel="very amazing"
-    elif p[4]>660 and p[4]<=790:
+    elif p.hp>660 and p.hp<=790:
         fel="really amazing"
-    elif p[4]>790 and p[4]<=900:
+    elif p.hp>790 and p.hp<=900:
         fel="incredibly amazing"
     else:
         fel="incredibly amazingly over-healthier"
@@ -616,7 +616,7 @@ def welth():
     global p
     tprint("Your monetary value:")
     for i in ["mon4"]:
-        tprint(" ",str(p[8][i])+i)
+        tprint(" ",str(p.mon[i])+i)
 #shoppable items
 shabl={"book":[5,10],"seed":[1,2],"apple":[2,5],"water":[0,1],"wood":[3,7],"rock":[2,5],"iron":[5,10],"coal":[3,10],"fire":[7,15],"pickaxe":[10,15],"axe":[10,15],"sword":[15,20],**mod.shabl}#"":[,],
 #shop() class
@@ -639,13 +639,13 @@ class shop:
         return "Welcome to "+self.nm+"!\n  "+"\n  ".join(st)+"\n"
     def pur(self,it):
         if it in self.wre:
-            if self.wre[it]<=p[8]["mon4"]:
-                p[8]["mon4"]-=self.wre[it]
-                p[2].append([it,1])
+            if self.wre[it]<=p.mon["mon4"]:
+                p.mon["mon4"]-=self.wre[it]
+                p.inv.append([it,1])
                 bfix()
                 return"You bought a "+it+"!"
             else:
-                return "You need "+str(self.wre[it]-p[8]["mon4"])+"mon4!"
+                return "You need "+str(self.wre[it]-p.mon["mon4"])+"mon4!"
         else:
             return"That's not an item!"
         # return"Purchase failed!"
@@ -663,33 +663,33 @@ def upMp(d):
     global mp,p
     #types 0-none,1-field,2-forest,3-river,4-mount
     if d==1:
-        p[1]-=1
+        p.y-=1
     elif d==2:
-        p[0]+=1
+        p.x+=1
     elif d==3:
-        p[1]+=1
+        p.y+=1
     elif d==4:
-        p[0]-=1
-    if p[0]<0:
+        p.x-=1
+    if p.x<0:
         for i in range(len(mp)):
             mp[i].insert(0,[randint(1,4),[]])
             if randint(0,3)==0:
                 mp[i][0][1].append("shop()")
-        p[0]=0
-    elif p[0]>len(mp[0])-1:
+        p.x=0
+    elif p.x>len(mp.x)-1:
         for i in range(len(mp)):
             mp[i].append([randint(1,4),[]])
             if randint(0,3)==0:
                 mp[i][-1][1].append("shop()")
-        p[0]=len(mp[0])-1
-    elif p[1]<0:
-        mp.insert(0,[[randint(1,4),["shop()"if randint(0,3)==0 else None]]for i in range(len(mp[0]))])
-        p[1]=0
-    elif p[1]>len(mp)-1:
-        mp.append([[randint(1,4),["shop()"if randint(0,3)==0 else None]]for i in range(len(mp[0]))])
-        p[1]=len(mp)-1
-    # print(mp,p[0],p[1])
-    return ["None","field","forest","river","moustain"][mp[p[1]][p[0]][0]]
+        p.x=len(mp.x)-1
+    elif p.y<0:
+        mp.insert(0,[[randint(1,4),["shop()"if randint(0,3)==0 else None]]for i in range(len(mp.x))])
+        p.y=0
+    elif p.y>len(mp)-1:
+        mp.append([[randint(1,4),["shop()"if randint(0,3)==0 else None]]for i in range(len(mp.x))])
+        p.y=len(mp)-1
+    # print(mp,p.x,p.y)
+    return ["None","field","forest","river","moustain"][mp[p.y][p.x][0]]
 #my horse: 🐎
 #stupidly necesary to get from savexode
 def gs(b):
@@ -698,18 +698,18 @@ def gs(b):
     tme=b[1].copy()
     mp=b[2].copy()
     # print(mp)
-# mp[0][0][1].append("shop()")
-# mp[0][0][1].append("house")
-# mp[0][0][1].append("firepit")
+# mp.x[0][1].append("shop()")
+# mp.x[0][1].append("house")
+# mp.x[0][1].append("firepit")
 
 #main action sys
 def action():
-    # print(p[6])10
+    # print(p.hg)10
     if randint(0,10)==0:
         fight()
         pass
-    tle=mp[p[1]][p[0]]
-    bulds={"shp":True in[i=="shop()" for i in mp[p[1]][p[0]][1]],"hse":True in[i=="house" for i in mp[p[1]][p[0]][1]],"fre":True in[i=="firepit" for i in mp[p[1]][p[0]][1]]}
+    tle=mp[p.y][p.x]
+    bulds={"shp":True in[i=="shop()" for i in mp[p.y][p.x][1]],"hse":True in[i=="house" for i in mp[p.y][p.x][1]],"fre":True in[i=="firepit" for i in mp[p.y][p.x][1]]}
     tle=tle[0]
     tmr()
     effd()
@@ -717,16 +717,16 @@ def action():
     vrb=str(floor(tme[2][0]*100))
     tprint("Its the",sm(floor(tme[2][1]+1)),"day. It's",("0"*(4-len(vrb)))+vrb,"o'clock.")
     tprint("You feel",hpr()+",",dcyc(),"and",hgr()+".")
-    mpp=floor(mapp(p[9][0],0,cxp(p[9][1]+1),0,5))
+    mpp=floor(mapp(p.xp,0,cxp(p.lvl+1),0,5))
     tprint("|"+("#"*mpp)+("_"*(5-mpp))+"|","XP to next level!\n")
-    for i in p[3]:
-        if p[3][i]>0:
-            tprint("You"+eff[i],"x"+str(p[3][i]))
-    if len(p[3])==0:
+    for i in p.eff:
+        if p.eff[i]>0:
+            tprint("You"+eff[i],"x"+str(p.eff[i]))
+    if len(p.eff)==0:
         tprint("You"+eff[""])
     tprint("You are on a",["None","field","forest","river","moustain"][tle],"tile!")
-    if p[11]>0:
-        p[11]-=1
+    if p.mv>0:
+        p.mv-=1
         print("For various reasons, you can't move!")
         sleep(1)
         return
@@ -772,19 +772,21 @@ def action():
         for i in ["z","Z","z","z","Z"]:
             print(i)
             sleep(random()/2)
-        tprint("You wake up feeling very refreshed!\nYou gain 0 HP!")
+        hpg=random(5,20)
+        tprint(f"You wake up feeling very refreshed!\nYou gain {hpg} HP!")
+        p.hp+=hpg
     elif inp=="5":
         fnd=res(tle)
         for i in fnd:
             tprint(str(i[1])+"x",i[0])
-            p[2].append(i)
+            p.inv.append(i)
         bfix()
         # intput("Press enter to continue!")
         sleep(0.5)
     elif inp=="6":
         welth()
         bbl={"none":0}
-        for a,i in enumerate(p[2]):
+        for a,i in enumerate(p.inv):
             tprint(str(i[1])+"x",i[0])
             bbl[i[0].lower()]=[i[1],a]
         tprint("To unequip: none")
@@ -800,29 +802,29 @@ def action():
             else:#if not(eq.lower() in bbl):
                 continue
             # continue
-            for a,i in enumerate(p[7]):
-                print(str(a+1)+".",i,"-",p[7][i][0])
+            for a,i in enumerate(p.eq):
+                print(str(a+1)+".",i,"-",p.eq[i][0])
             eqt=intput("Which would you like to equip",eq,"to? ")
-            if not eqt.lower() in p[7]:
+            if not eqt.lower() in p.eq:
                 continue
-            p[2].append(p[7][eqt].copy())
+            p.inv.append(p.eq[eqt].copy())
             if eq.lower()!="none":
-                p[2][bbl[eq.lower()][1]][1]-=1
-                p[7][eqt]=p[2][bbl[eq.lower()][1]].copy()
-            if not p[7][eqt][0]in wepon:
-                wepon[p[7][eqt][0]]={"blk":0,"atk":0,"desc":"not a wepon","eff":[],}
-            p[7][eqt][1]=1
+                p.inv[bbl[eq.lower()][1]][1]-=1
+                p.eq[eqt]=p.inv[bbl[eq.lower()][1]].copy()
+            if not p.eq[eqt][0]in wepon:
+                wepon[p.eq[eqt][0]]={"blk":0,"atk":0,"desc":"not a wepon","eff":[],}
+            p.eq[eqt][1]=1
             bfix()
             # intput("")
             break
     elif inp=="7":
         if bulds["shp"]:
-            # po=[a if isinstance(i,"shop()")else -1 for a,i in enumerate(mp[p[1]][p[0]][1])]
+            # po=[a if isinstance(i,"shop()")else -1 for a,i in enumerate(mp[p.y][p.x][1])]
             # for i in po:
             #     if i!=-1:
             #         po=i
             #         break
-            # mp[p[1]][p[0]][1][po].dor()
+            # mp[p.y][p.x][1][po].dor()
             shop().dor()
         else:
             tprint("There's no shop here!")
@@ -833,10 +835,10 @@ def action():
             tprint("There's no house here!")
     elif inp=="stats":
         #0-x map, 1-y map, 2-inv[name, amnt],3-effects,4-hp,5-atk,6-hunger,7-equiped,8-mon,9-xp,10-spells
-        tprint(f"Map: {p[0]}, {p[1]}\nInventory: {p[2]}\nEffects: {p[3]}\nHP: {p[4]}\nATK: {p[5]}\nHunger: {p[6]}\nEqupied: {p[7]}\nMoney: {p[8]}\nXP: {p[9]}\nSpells: {p[10]}")#HP:",p[4],"\nEffects:",p[3],"\nXP",p[9])
+        tprint(f"Map: {p.x}, {p.y}\nInventory: {p.inv}\nEffects: {p.eff}\nHP: {p.hp}\nATK: {p.atk}\nHunger: {p.hg}\nEqupied: {p.eq}\nMoney: {p.mon}\nXP: {p[9]}\nSpells: {p.spl}")#HP:",p.hp,"\nEffects:",p.eff,"\nXP",p[9])
         intput("press enter")
     elif inp=="xpp":
-        p[9][0]+=int(intput("add? ",p[9][0]," "))
+        p.xp+=int(intput("add? ",p.xp," "))
     elif inp=="read":
         readr()
     else:
